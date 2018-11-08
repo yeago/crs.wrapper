@@ -11,8 +11,8 @@ adSettings = {
             "zoneId": "1047020"
         },
         "appnexus": {
-            "active": false,
-            "accountId": "11904342",
+            "active": true,
+            "accountId": "14159182"
         },
         "criteo": {
             "active": true,

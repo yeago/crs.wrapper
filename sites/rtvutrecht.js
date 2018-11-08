@@ -11,8 +11,8 @@ adSettings = {
             "zoneId": "1047026"
         },
         "appnexus": {
-            "active": false,
-            "accountId": "11904342",
+            "active": true,
+            "accountId": "14155177"
         },
         "criteo": {
             "active": true,
@@ -29,7 +29,8 @@ adSettings = {
                 "300x250": 1189434,
                 "320x50": 1189695,
                 "728x90": 1189696,
-                "320x100": 1193421
+                "320x100": 1193421,
+                "320x240": 1213678
             }
         },
         "ix": {

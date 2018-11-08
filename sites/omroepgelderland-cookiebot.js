@@ -1,35 +1,34 @@
-//used for the site lauched in Septebmer 2018
 adSettings = {
-    "dfpNetworkcode": 12779449,
-    "siteName": "rtvoost",
+    "dfpNetworkcode": 38496904,
+    "siteName": "omroepgelderland",
     "prebid": true,
     "PREBID_TIMEOUT": 1400,
     "hbSettings": {
         "rubicon": {
             "active": true,
-            "siteId": "212770",
+            "siteId": "212766",
             "accountId": "18908",
-            "zoneId": "1047008"
+            "zoneId": "1047014"
         },
         "appnexus": {
             "active": true,
-            "accountId": "14155220"
+            "accountId": "14155233"
         },
         "criteo": {
             "active": true,
             "zoneIds": 
             {
-                "300x250": "1269845",
-                "320x50": "1269846",
-                "728x90": "1269847"
+                "300x250": "1269861",
+                "320x50": "1269862",
+                "728x90": "1269863"
             }
         },
         "improveDigital": {
             "active": true,
             "placementIds": {
-                "300x250": 1189440,
-                "320x50": 1191606,
-                "728x90": 1191607
+                "300x250": "1189438",
+                "320x50": "1191604",
+                "728x90": "1191605"
             }
         },
         "ix": {
@@ -82,6 +81,12 @@ adSettings = {
                     "minwidth": 992,
                     "sizes": [[300, 250]]
                 }]
+            },
+            "defaultsidebar3": {
+                "viewports": [{
+                    "minwidth": 992,
+                    "sizes": [[300, 250]]
+               }]
             }
         },
         "Container": {
@@ -116,7 +121,7 @@ adSettings = {
                     "sizes": [300, 250]
                 }]
             },
-            "defaultsidebar2": {
+            "defaultsidebar3": {
                 "viewports": [{
                     "minwidth": 992,
                     "sizes": [[300, 250]]
@@ -132,30 +137,9 @@ adSettings = {
             },
             "mobileheaderbanner": {
                 "viewports": [{
-                    "maxwidth": 768,
-                    "sizes": [300, 250]
-                }]
-            },
-            "mobileleaderboard": {
-                "viewports": [{
+                    "minwidth": 992,
                     "maxwidth": 1200,
                     "sizes": [320, 50]
-                }]
-            },
-            "defaultcontent1": {
-                "viewports": [ {
-                    "minwidth": 768,
-                    "sizes": [728, 90]
-                }]
-            },
-            "defaultcontent2": {
-                "viewports": [{
-                    "maxwidth": 768,
-                    "sizes": [300, 250]
-                },
-                {
-                    "minwidth": 768,
-                    "sizes": [300, 250]
                 }]
             },
             "defaultsidebar1": {
@@ -164,10 +148,27 @@ adSettings = {
                     "sizes": [300, 250]
                 }]
             },
-            "defaultsidebar2": {
+            "defaultsidebar3": {
                 "viewports": [{
                     "minwidth": 992,
                     "sizes": [[300, 250]]
+                }]
+            },
+            "defaultcontent3": {
+              "viewports": [{
+                    "maxwidth": 766,
+                    "sizes": [[320, 226]]
+                },{
+                    "mindwidth": 766,
+                    "maxwidth": 992,
+                    "sizes": [[738, 293]]
+                },{
+                    "minwidth": 992,
+                    "maxwidth": 1200,
+                    "sizes": [[940, 329]]
+                },{
+                    "minwidth": 1200,
+                    "sizes": [[770, 299]]
                 }]
             }
         },
@@ -204,7 +205,7 @@ adSettings = {
                     "sizes": [300, 250]
                 }]
             },
-            "defaultsidebar2": {
+            "defaultsidebar3": {
                 "viewports": [{
                     "minwidth": 992,
                     "sizes": [[300, 250]]
@@ -237,7 +238,7 @@ adSettings = {
                     "sizes": [300, 250]
                 }]
             },
-            "defaultsidebar2": {
+            "defaultsidebar3": {
                 "viewports": [{
                     "minwidth": 992,
                     "sizes": [[300, 250]]
@@ -270,7 +271,7 @@ adSettings = {
                     "sizes": [300, 250]
                 }]
             },
-            "defaultsidebar2": {
+            "defaultsidebar3": {
                 "viewports": [{
                     "minwidth": 992,
                     "sizes": [[300, 250]]
@@ -303,7 +304,7 @@ adSettings = {
                     "sizes": [300, 250]
                 }]
             },
-            "defaultsidebar2": {
+            "defaultsidebar3": {
                 "viewports": [{
                     "minwidth": 992,
                     "sizes": [[300, 250]]
@@ -336,7 +337,7 @@ adSettings = {
                     "sizes": [300, 250]
                 }]
             },
-            "defaultsidebar2": {
+            "defaultsidebar3": {
                 "viewports": [{
                     "minwidth": 992,
                     "sizes": [[300, 250]]
@@ -369,7 +370,7 @@ adSettings = {
                     "sizes": [300, 250]
                 }]
             },
-            "defaultsidebar2": {
+            "defaultsidebar3": {
                 "viewports": [{
                     "minwidth": 992,
                     "sizes": [[300, 250]]
@@ -409,7 +410,7 @@ adSettings = {
                     "sizes": [300, 250]
                 }]
             },
-            "defaultsidebar2": {
+            "defaultsidebar3": {
                 "viewports": [{
                     "minwidth": 992,
                     "sizes": [[300, 250]]
@@ -424,7 +425,7 @@ adSettings = {
     adManager.async = true; 
     adManager.type = 'text/javascript'; 
     var useSSL = 'https:' == document.location.protocol;
-    adManager.src = (useSSL ? 'https:' : 'http:') + '//crs-media-cdn.nl/admanager.min.js';
+    adManager.src = (useSSL ? 'https:' : 'http:') + '//crs-media-cdn.nl/admanager-cookiebot.js';
     var node = document.getElementsByTagName('script')[0]; 
     node.parentNode.insertBefore(adManager, node);
 }()

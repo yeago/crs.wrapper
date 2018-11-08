@@ -11,8 +11,8 @@ adSettings = {
             "zoneId": "1047014"
         },
         "appnexus": {
-            "active": false,
-            "accountId": "11904342"
+            "active": true,
+            "accountId": "14155233"
         },
         "criteo": {
             "active": true,
@@ -81,6 +81,12 @@ adSettings = {
                     "minwidth": 992,
                     "sizes": [[300, 250]]
                 }]
+            },
+            "defaultsidebar3": {
+                "viewports": [{
+                    "minwidth": 992,
+                    "sizes": [[300, 250]]
+               }]
             }
         },
         "Container": {
@@ -146,6 +152,23 @@ adSettings = {
                 "viewports": [{
                     "minwidth": 992,
                     "sizes": [[300, 250]]
+                }]
+            },
+            "defaultcontent3": {
+              "viewports": [{
+                    "maxwidth": 766,
+                    "sizes": [[320, 226]]
+                },{
+                    "mindwidth": 766,
+                    "maxwidth": 992,
+                    "sizes": [[738, 293]]
+                },{
+                    "minwidth": 992,
+                    "maxwidth": 1200,
+                    "sizes": [[940, 329]]
+                },{
+                    "minwidth": 1200,
+                    "sizes": [[770, 299]]
                 }]
             }
         },

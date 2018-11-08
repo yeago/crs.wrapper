@@ -16,7 +16,7 @@ adSettings = {
         },
         "appnexus": {
             "active": false,
-            "accountId": "11904342",
+            "accountId": "14159179",
         },
         "criteo": {
             "active": false,
@@ -28,7 +28,7 @@ adSettings = {
             }
         },
         "improveDigital": {
-            "active": true,
+            "active": false,
             "placementIds": {
                 "300x250": 1189443,
                 "320x50": 1191615,

@@ -12,73 +12,86 @@ setGoogleTag();
 pickAdFlow();
 
 function pickAdFlow(){
-    if(hasCmp()){
-        initCmpAds()
+    var cmp = hasCmp()
+    if(cmp){
+        initCmpAds(cmp)
     }
     else{
         if(hasLegacyConsent()){
-            loadAds();
+            loadAds(cmp);
         }
     }
 };
 
-function initCmpAds(){
-    window.__cmp('addEventListener', 'cmpReady', function (){
-        if(getDfpConsent()){
-            loadAds()
-        }
-        else{
-            loadAdsOnConsentEvent();
-        }
-    });
+function initCmpAds(cmp){
+    if (cmp=='faktor'){
+        window.__cmp('addEventListener', 'cmpReady', function (){
+            if(getDfpConsent(cmp)){
+                loadAds(cmp)
+            }
+            else{
+                loadAdsOnConsentEvent(cmp);
+            }
+        })
+    };
+    if(cmp=='cookiebot'){
+        window.addEventListener('CookiebotOnLoad', function () {
+            loadAds(cmp)
+        }, false);
+    }
 }
 
-function loadAds(){
+function loadAds(cmp){
     loadDfp(function() {
         loadPrebidJs(function(){
             var visibleAdslots = getAdslots();
-            loadPrebid(visibleAdslots, section);
-            defineAdslots(visibleAdslots, targeting);
+            loadPrebid(visibleAdslots, section, cmp);
+            defineAdslots(visibleAdslots, targeting, cmp);
             renderAds(visibleAdslots);
         })
     })
+};
+
+function loadAdserverOnConsentEvent(cmp){
+    var useSSL = 'https:' == document.location.protocol;
+    var dfpUrl = (useSSL ? 'https:' : 'http:') + '//www.googletagservices.com/tag/js/gpt.js';
+    var prebidUrl = (useSSL ? 'https:' : 'http:') + '//crs-media-cdn.nl/prebid.js';
+    jQuery.getScript(dfpUrl, function (){
+        jQuery.getScript(prebidUrl);
+        var visibleAdslots = getAdslots();
+        loadPrebid(visibleAdslots, section, cmp);
+        defineAdslots(visibleAdslots, targeting, cmp);
+        renderAds(visibleAdslots);
+    });
 }
 
-function loadAdsOnConsentEvent(){ 
+function loadAdsOnConsentEvent(cmp){
+    //faktor only: cookiebot is loads nonPersonalized
     if(!gotAds){
-        window.__cmp('addEventListener', 'consentChanged', function () {
-            if(getDfpConsent()){
-                var useSSL = 'https:' == document.location.protocol;
-                var dfpUrl = (useSSL ? 'https:' : 'http:') + '//www.googletagservices.com/tag/js/gpt.js';
-                var prebidUrl = (useSSL ? 'https:' : 'http:') + '//crs-media-cdn.nl/prebid.js';
-                jQuery.getScript(dfpUrl, function (){
-                    jQuery.getScript(prebidUrl);
-                    var visibleAdslots = getAdslots();
-                    loadPrebid(visibleAdslots, section);
-                    defineAdslots(visibleAdslots, targeting);
-                    renderAds(visibleAdslots);
-                });
-            }
-            else{
-            }
-        });
+        if(cmp&&cmp=='faktor'){
+            window.__cmp('addEventListener', 'consentChanged', function () {
+                if(getDfpConsent(cmp)){
+                    loadAdserverOnConsentEvent(cmp)
+                }
+            });
+        }
     }
 };
 
-function setGoogleTag(){
+function setGoogleTag(cmp){
     googletag.cmd.push(function() {
     googletag.pubads().disableInitialLoad();
     });
-    if(!getGoogleConsent())
+    if(!getGoogleConsent(cmp))
     {
         googletag.cmd.push(function() {
             googletag.pubads().disableInitialLoad()
             googletag.pubads().setRequestNonPersonalizedAds(1)
         });
     }
-}
+};
 
-function getPbjsConfig(){
+function getPbjsConfig(cmp){
     var customPrice = {
         'buckets': [
             {
@@ -127,28 +140,37 @@ function getPbjsConfig(){
             }
         }
     }
-    //ask CMP if pubcid is allowed
-    var allowPubcid = true;
-    var adNetworks = [32, 91, 52, 10];
-    for (var i=0; i < adNetworks.length; i++){
-        if(!getIabVendorConsent(adNetworks[i], [1,2])){
-            allowPubcid = false;
+
+    if (cmp && cmp=='faktor'){
+        //ask CMP if pubcid is allowed
+        var allowPubcid = true;
+        var adNetworks = [32, 91, 52, 10];
+        for (var i=0; i < adNetworks.length; i++){
+            if(!getIabVendorConsent(adNetworks[i], [1,2])){
+                allowPubcid = false;
+            }
+        }
+        if (allowPubcid){
+           pbjsConfig.pubcid.enable = true
         }
     }
-    if (allowPubcid){
-       pbjsConfig.pubcid.enable = true
+
+    if (getPrebidConsent(cmp)){
+        pbjsConfig.pubcid.enable = true
+        pbjsConfig.consentManagement.allowAuctionWithoutConsent = true;
     }
+
 
     if(!hasCmp() && hasLegacyConsent()){
         pbjsConfig.consentManagement.allowAuctionWithoutConsent = true;
     }
     return pbjsConfig
-}
+};
 
-function loadPrebid(visibleAdslots, section){
-    if(adSettings.prebid){
+function loadPrebid(visibleAdslots, section, cmp){
+    if(adSettings.prebid && getPrebidConsent(cmp)){
         var adUnits = getAdunits(visibleAdslots, section);
-        var pbjsConfig = getPbjsConfig();
+        var pbjsConfig = getPbjsConfig(cmp);
         
         pbjs.que.push(function() {
             pbjs.setConfig(pbjsConfig);
@@ -177,7 +199,6 @@ function loadPrebid(visibleAdslots, section){
             googletag.cmd.push(function() {
                 googletag.pubads().refresh();
             });
-
         }
     }
 
@@ -187,7 +208,7 @@ function loadPrebid(visibleAdslots, section){
     setTimeout(function() {
         initAdserver();
     }, PREBID_TIMEOUT);
-}
+};
 
 function getAdslots() {
     var sectionAdslots = adSettings.adslots[getSection()]
@@ -215,7 +236,7 @@ function getAdslots() {
         }
     }
     return visibleAdslots
-}
+};
 
 function getTargeting(section){
     var custom = {};
@@ -264,7 +285,7 @@ function getTargeting(section){
   }
 
   return custom
-}
+};
 
 function loadDfp(callback){
     var gads = document.createElement('script');
@@ -275,7 +296,7 @@ function loadDfp(callback){
     var node = document.getElementsByTagName('script')[0]; 
     node.parentNode.insertBefore(gads, node);
     callback();
-}
+};
 
 function loadPrebidJs(callback){
     var prebid = document.createElement('script');   
@@ -286,15 +307,9 @@ function loadPrebidJs(callback){
     var node = document.getElementsByTagName('script')[0]; 
     node.parentNode.insertBefore(prebid, node);
     callback();
-}
+};
 
-function defineAdslots(visibleAdslots, targeting){
-    //build allowed array of networks in case of waterfall
-    var disallowedNetworks = [];
-    if(getIabVendorConsent(52, [2,3,4,5])){
-        disallowedNetworks.push('rubicon');
-    }
-
+function defineAdslots(visibleAdslots, targeting, cmp){
     googletag.cmd.push(function() {
         for (adslot in visibleAdslots){
             var dfpAdslot = '/' + adSettings.dfpNetworkcode + '/' + adSettings.siteName + '-' + adslot;
@@ -306,14 +321,13 @@ function defineAdslots(visibleAdslots, targeting){
                 setTargeting('urlcategory2', targeting.urlCategory2).
                 setTargeting('urlpath', targeting.urlPath).
                 setTargeting('keywords', targeting.keyword).
-                setTargeting('disallow_networks', disallowedNetworks).
                 addService(googletag.pubads());
-            googletag.pubads().collapseEmptyDivs();
-            googletag.pubads().enableSingleRequest();
-            googletag.enableServices();
         }
+        googletag.pubads().collapseEmptyDivs();
+        googletag.pubads().enableSingleRequest();
+        googletag.enableServices();
     })
-}
+};
 
 function renderAds(visibleAdslots){
     for(var adslot in visibleAdslots){
@@ -347,7 +361,7 @@ function renderAds(visibleAdslots){
         }(10, adslot, gotParent))
     }
     gotAds = true;
-}
+};
 
 function getSection(){
     var element = document.querySelector('meta[property="crsmediasection"]');
@@ -370,7 +384,7 @@ function getSection(){
     }
 
     return sectionName
-}
+};
 
 function cleanChars(string, slash){
     try{
@@ -502,32 +516,34 @@ function pbIx(size){
     return bidder;
 }
 
-function getDfpConsent(){
+function getDfpConsent(cmp){
     //vendor for Google = 3
-    var consent = false;
-    if(!hasCmp()){
+    if(!cmp){
         if(hasLegacyConsent()){
-            consent = true;
+            return true;
         }
     }
 
-    else{
+    else if(cmp=='faktor'){
         window.__cmp('addEventListener', 'cmpReady', function (){
             window.__cmp('getAdditionalVendorConsents', undefined, function(data) {
                 if (data.purposeConsents[1] && data.vendorConsents[3]) {
-                    consent = true;
+                    return true;
                 }
             });
         });
     }
-    return consent;
+
+    else if(cmp=='cookiebot'){
+        return true;
+    }
 }
 
-
-function getGoogleConsent(){
+function getGoogleConsent(cmp){
+    //check CMP if okay to load personalize Admanager ads
     //vendor for Google = 3
     var consent = true;
-    if(!hasCmp()){
+    if(!cmp){
         if(hasLegacyConsent()){
             return true;
         }
@@ -537,23 +553,49 @@ function getGoogleConsent(){
     }
 
     else{
-        consent = false;
-        window.__cmp('getAdditionalVendorConsents', undefined, function(data) {
-            if (data.purposeConsents[1, 2] && data.vendorConsents[3]) {
-                consent = true;
-            }
-        });
+        if (cmp == 'faktor'){
+            consent = false;
+            window.__cmp('getAdditionalVendorConsents', undefined, function(data) {
+                if (data.purposeConsents[1, 2] && data.vendorConsents[3]) {
+                    return true;
+                }
+            });
+        }
+        if (cmp == 'cookiebot' && !Cookiebot.consent.marketing){
+            return false;
+        }
+        else if(cmp == 'cookiebot' && Cookiebot.consent.marketing){
+            return true;
+        }
     }
     return consent;
 }
 
-//function also used by publishers directly! ensure backward compatibilty
-function hasCmp(){
-    if(typeof window.__cmp == "undefined"){
-        return false
+function getPrebidConsent(cmp){
+    if(cmp && cmp=='cookiebot'){
+        if(!window.Cookiebot.marketing){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
     else{
         return true
+    }
+}
+
+
+//function also used by publishers directly! ensure backward compatibilty
+function hasCmp(){
+    if(typeof window.__cmp != "undefined"){
+        return 'faktor'
+    }
+    else if (typeof window.Cookiebot != "undefined"){
+        return 'cookiebot'
+    }
+    else{
+        return false
     }
 }
 

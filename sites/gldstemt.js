@@ -11,8 +11,8 @@ adSettings = {
             "zoneId": "1047006"
         },
         "appnexus": {
-            "active": false,
-            "accountId": "11904342",
+            "active": true,
+            "accountId": "14155233",
         },
         "criteo": {
             "active": true,
@@ -53,8 +53,12 @@ adSettings = {
             },
             "rectangleATF": {
                 "viewports": [{
-                        "minwidth": 0,
-                        "sizes": [300, 250]
+                    "maxwidth": 768,
+                    "sizes": [[300, 250], [320, 240]]
+                },
+                {
+                    "minwidth": 768,
+                    "sizes": [300, 250]
                 }]
             },
             "bannerBTF": {
@@ -83,10 +87,13 @@ adSettings = {
         "Article": {
             "rectangleATF": {
                 "viewports": [{
-                        "minwidth": 0,
-                        "sizes": [300, 250]
-                    }
-                ]
+                    "maxwidth": 768,
+                    "sizes": [[300, 250], [320, 240]]
+                },
+                {
+                    "minwidth": 768,
+                    "sizes": [300, 250]
+                }]
             },
             "bannerATF": {
                 "viewports": [{

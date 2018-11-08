@@ -9,9 +9,7 @@
         <meta keywords="foo,bar">
         <!--<script type='text/javascript' src='sites/test.js?v=6'></script>-->
         <script>
-
             var domReady = false;
-
             //set legacy consent cookie for testing purposes
             var date = new Date();
             date.setTime(date.getTime() + (365*24*60*60*1000));
@@ -21,7 +19,6 @@
 
         <script>
 console.log("You are at the test site, pointing to the internal DFP account");
-
 adSettings = {
     //"dfpNetworkcode": 12779449,
     "dfpNetworkcode": 21722727094,
@@ -399,19 +396,16 @@ adSettings = {
         }
     }
 };
-
 var googletag = googletag || {};
 googletag.cmd = googletag.cmd || [];
-
 var pbjs = pbjs || {};
 pbjs.que = pbjs.que || [];
-
 var section = getSection();
 var targeting = getTargeting(section);
 var gotAds = false;
 
 setGoogleTag();
-pickAdFlow();
+//pickAdFlow();
 
 function pickAdFlow(){
     var cmp = hasCmp()
@@ -419,11 +413,11 @@ function pickAdFlow(){
         initCmpAds(cmp)
     }
     else{
-        if(hasLegacyConsent()){
+        if(hasLegacyConsent() || !hasLegacyConsent()){
             loadAds(cmp);
         }
     }
- };
+};
 
 function initCmpAds(cmp){
     if (cmp=='faktor'){
@@ -480,6 +474,7 @@ function loadAdsOnConsentEvent(cmp){
     }
 };
 
+
 function setGoogleTag(cmp){
     googletag.cmd.push(function() {
     googletag.pubads().disableInitialLoad();
@@ -491,8 +486,7 @@ function setGoogleTag(cmp){
             googletag.pubads().setRequestNonPersonalizedAds(1)
         });
     }
-};
-
+}
 function getPbjsConfig(cmp){
     var customPrice = {
         'buckets': [
@@ -518,7 +512,6 @@ function getPbjsConfig(cmp){
                 "increment": 1
             }
         ]};
-
     pbjsConfig = {
         enableSendAllBids: true,
         pubcid: {
@@ -542,9 +535,8 @@ function getPbjsConfig(cmp){
             }
         }
     }
-
+    //ask CMP if pubcid is allowed
     if (cmp && cmp=='faktor'){
-        //ask CMP if pubcid is allowed
         var allowPubcid = true;
         var adNetworks = [32, 91, 52, 10];
         for (var i=0; i < adNetworks.length; i++){
@@ -562,12 +554,11 @@ function getPbjsConfig(cmp){
         pbjsConfig.consentManagement.allowAuctionWithoutConsent = true;
     }
 
-
     if(!hasCmp() && hasLegacyConsent()){
         pbjsConfig.consentManagement.allowAuctionWithoutConsent = true;
     }
     return pbjsConfig
-};
+}
 
 function loadPrebid(visibleAdslots, section, cmp){
     if(adSettings.prebid && getPrebidConsent(cmp)){
@@ -603,20 +594,16 @@ function loadPrebid(visibleAdslots, section, cmp){
             });
         }
     }
-
     PREBID_TIMEOUT = 1500;
     if(adSettings.PREBID_TIMEOUT){PREBID_TIMEOUT = adSettings.PREBID_TIMEOUT}
-
     setTimeout(function() {
         initAdserver();
     }, PREBID_TIMEOUT);
-};
-
+}
 function getAdslots() {
     var sectionAdslots = adSettings.adslots[getSection()]
     var visibleAdslots = {};
     var windowWidth = window.innerWidth;
-
     for(adslot in sectionAdslots){
         viewports = sectionAdslots[adslot].viewports;
         for (var i = 0; i < viewports.length; i++){
@@ -638,8 +625,7 @@ function getAdslots() {
         }
     }
     return visibleAdslots
-};
-
+}
 function getTargeting(section){
     var custom = {};
     try{
@@ -653,12 +639,10 @@ function getTargeting(section){
     catch(err){
         custom.keyword = []; 
     }
-
     try{
         custom.category = section
     }
     catch(err){}
-
     try
     {
         var urlPath = window.location.pathname;
@@ -667,7 +651,6 @@ function getTargeting(section){
         if (cleanPath){custom.urlPath = cleanPath};
     }
     catch(err){}
-
     try
     {
         urlCat0 = cleanChars(urlCategories[1], true);
@@ -676,7 +659,6 @@ function getTargeting(section){
     catch(err){
         custom.urlCategory1 = '';
     }
-
   try
   {
     urlCat1 = cleanChars(urlCategories[2], true);
@@ -685,10 +667,8 @@ function getTargeting(section){
   catch(err){
     custom.urlCategory2 = '';
   }
-
   return custom
-};
-
+}
 function loadDfp(callback){
     var gads = document.createElement('script');
     gads.async = true; 
@@ -698,8 +678,7 @@ function loadDfp(callback){
     var node = document.getElementsByTagName('script')[0]; 
     node.parentNode.insertBefore(gads, node);
     callback();
-};
-
+}
 function loadPrebidJs(callback){
     var prebid = document.createElement('script');   
     prebid.async = true; 
@@ -709,8 +688,7 @@ function loadPrebidJs(callback){
     var node = document.getElementsByTagName('script')[0]; 
     node.parentNode.insertBefore(prebid, node);
     callback();
-};
-
+}
 function defineAdslots(visibleAdslots, targeting, cmp){
     googletag.cmd.push(function() {
         for (adslot in visibleAdslots){
@@ -729,14 +707,13 @@ function defineAdslots(visibleAdslots, targeting, cmp){
         googletag.pubads().enableSingleRequest();
         googletag.enableServices();
     })
-};
-
+}
 function renderAds(visibleAdslots){
     for(var adslot in visibleAdslots){
         var adslotCompleted = false;
         var gotParent = false;
-
         (function theLoop(i, adslot, gotParent){
+            console.log('starting loop: ', i)
             setTimeout(function (){
                 if(!gotParent)
                 {
@@ -749,45 +726,42 @@ function renderAds(visibleAdslots){
                             googletag.display(newDiv.id);
                         })
                     }
-                    catch(err){}
+                    catch(err){
+                        console.log(adslot);
+                        console.log(err);
+                    }
+                    console.log(i * 100);
                 }
                 if (--i){
-                    theLoop(i, adslot, gotParent);
+                    theLoop(i);
                 }
-            }, 100);
-
-            if(i == 1 && !gotParent)
-            {
-                console.log("The following div was expected by the Admanager, but doesn't exist on the site: " + adslot)
-            }
+            }, 1000);
         }(10, adslot, gotParent))
+        if(!gotParent){
+            console.log("The following div was expected by the Admanager, but doesn't exist on the site: " + adslot)
+        }
     }
     gotAds = true;
-};
-
+}
 function getSection(){
     var element = document.querySelector('meta[property="crsmediasection"]');
                   document.querySelector('meta[property="crsmediasection"]').content
     if (!element){element = document.querySelector('meta[property="yieldprosection"]');};
     if (!element){element = document.querySelector('meta[property="ancorasection"]');};
     viewport = window.innerWidth;
-
     //set section based on meta tag, else use the first defined value
     var sectionName = element && element.getAttribute("content");
     if (!sectionName){
       sectionName = Object.keys(adSettings.adslots)[0];
       console.log("No section found on site. Please add one");
     }
-
     if(!adSettings.adslots[sectionName])
     {
         console.log("Error: Section not found in ad mapping. Contact AdOps. Defaulting to front page grid. Section name expected: " + sectionName);
         sectionName = Object.keys(adSettings.adslots)[0];
     }
-
     return sectionName
-};
-
+}
 function cleanChars(string, slash){
     try{
         if (slash === true){
@@ -801,7 +775,6 @@ function cleanChars(string, slash){
     }
     catch(err){};
 }
-
 function checkArray(array){
     if (!Array.isArray(array[0]))
     {
@@ -812,7 +785,6 @@ function checkArray(array){
         return array
     }
 }
-
 function getAdunits(visibleAdslots, section) {
     var adUnits = [];
     for(adslot in visibleAdslots){
@@ -821,7 +793,6 @@ function getAdunits(visibleAdslots, section) {
             var sizes = checkArray(visibleAdslots[adslot])
             if(adSettings.hbSettings.rubicon.active){bids.push(pbRubicon())};
             if(adSettings.hbSettings.appnexus.active){bids.push(pbAppNexus());}
-
             for(var i = 0; i < sizes.length; i++){
                 if(adSettings.hbSettings.criteo.active){bids.push(pbCriteo(sizes[i]));}
                 if(adSettings.hbSettings.ix.active){bids.push(pbIx(sizes[i]));}
@@ -842,7 +813,6 @@ function getAdunits(visibleAdslots, section) {
     }
     return adUnits
 }
-
 function pbImproveDigital(size){
     improveDigital = adSettings.hbSettings.improveDigital
     sizeString = size[0] + 'x' + size[1];
@@ -857,7 +827,6 @@ function pbImproveDigital(size){
     }
     return bidder;
 }
-
 function pbCriteo(size){
     criteo = adSettings.hbSettings.criteo
     sizeString = size[0] + 'x' + size[1];
@@ -872,7 +841,6 @@ function pbCriteo(size){
     }
     return bidder;
 }
-
 function pbRubicon(){
     rubicon = adSettings.hbSettings.rubicon
     var bidder = {}
@@ -888,7 +856,6 @@ function pbRubicon(){
     }
     return bidder;
 }
-
 function pbAppNexus(){
     appnexus = adSettings.hbSettings.appnexus
     var bidder = {}
@@ -902,7 +869,6 @@ function pbAppNexus(){
     }
     return bidder;
 }
-
 function pbIx(size){
     ix = adSettings.hbSettings.ix
     var bidder = {}
@@ -920,30 +886,31 @@ function pbIx(size){
 
 function getDfpConsent(cmp){
     //vendor for Google = 3
+    var consent = false;
+
     if(!cmp){
         if(hasLegacyConsent()){
-            return true;
+            consent = true;
         }
     }
 
     else if(cmp=='faktor'){
-
         window.__cmp('addEventListener', 'cmpReady', function (){
             window.__cmp('getAdditionalVendorConsents', undefined, function(data) {
                 if (data.purposeConsents[1] && data.vendorConsents[3]) {
-                    return true;
+                    consent = true;
                 }
             });
         });
     }
 
     else if(cmp=='cookiebot'){
-        return true;
+        consent = true;
     }
 }
 
+
 function getGoogleConsent(cmp){
-    //check CMP if okay to load personalize Admanager ads
     //vendor for Google = 3
     var consent = true;
     if(!cmp){
@@ -1041,8 +1008,16 @@ function hasLegacyConsent(){
     }
     return false;
 }
-
-
+!function () {
+    var adManager = document.createElement('script');   
+    adManager.async = true; 
+    adManager.type = 'text/javascript'; 
+    var useSSL = 'https:' == document.location.protocol;
+    //adManager.src = 'admanager.js?v=3';
+    //adManager.src = (useSSL ? 'https:' : 'http:') + '//crs-media-cdn.nl/admanager.min.js';
+    //var node = document.getElementsByTagName('script')[0]; 
+    //node.parentNode.insertBefore(adManager, node);
+}()
         </script>
 
     </head>

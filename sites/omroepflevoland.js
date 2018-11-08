@@ -11,8 +11,8 @@ adSettings = {
             "zoneId": "1047012"
         },
         "appnexus": {
-            "active": false,
-            "accountId": "11904342",
+            "active": true,
+            "accountId": "14155273"
         },
         "criteo": {
             "active": true,
@@ -28,7 +28,8 @@ adSettings = {
             "placementIds": {
                 "300x250": "1189441",
                 "320x50": "1191610",
-                "728x90": "1191611"
+                "728x90": "1191611",
+                "320x240": "1206732"
             }
         },
         "ix": {
@@ -50,12 +51,8 @@ adSettings = {
             },
             "homerect1": {
                 "viewports" : [{
-                    "maxwidth": 700,
-                    "sizes": [[320, 50]]
-                },
-                {
-                    "minwidth": 700,
-                    "sizes": [[300, 250]]
+                    "minwidth": 0,
+                    "sizes": [[300, 250], [320, 240]]
                 }]
             },
             "homelead2": {
@@ -80,22 +77,14 @@ adSettings = {
             },
             "homerect2": {
                 "viewports" : [{
-                    "maxwidth": 700,
-                    "sizes": [[320, 50]]
-                },
-                {
-                    "minwidth": 700,
-                    "sizes": [[300, 250]]
+                    "minwidth": 0,
+                    "sizes": [[300, 250], [320, 240]]
                 }]
             },
             "homerect3": {
                 "viewports" : [{
-                    "maxwidth": 700,
-                    "sizes": [[320, 50]]
-                },
-                {
-                    "minwidth": 700,
-                    "sizes": [[300, 250]]
+                    "minwidth": 0,
+                    "sizes": [[300, 250], [320, 240]]
                 }]
             }                               
         },
@@ -208,7 +197,7 @@ adSettings = {
             "lay2lead1": {
                 "viewports" : [{
                     "maxwidth": 700,
-                    "sizes": [[320, 50]]
+                    "sizes": [[300, 250], [320, 240]]
                 },
                 {
                     "minwidth": 700,

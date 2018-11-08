@@ -11,8 +11,8 @@ adSettings = {
             "zoneId": "1046984"
         },
         "appnexus": {
-            "active": false,
-            "accountId": "11904342",
+            "active": true,
+            "accountId": "14155177",
         },
         "criteo": {
             "active": true,
@@ -29,7 +29,8 @@ adSettings = {
                 "300x250": 1189434,
                 "320x50": 1189695,
                 "728x90": 1189696,
-                "320x100": 1193421
+                "320x100": 1193421,
+                "320x240": 1213678
             }
         },
         "ix": {
@@ -41,7 +42,11 @@ adSettings = {
         "Home": {
             "defaultcontent1": {
                 "viewports": [{
-                    "minwidth": 0,
+                    "maxwidth": 768,
+                    "sizes": [[300, 250], [320, 240]]
+                },
+                {
+                    "minwidth": 768,
                     "sizes": [300, 250]
                 }]
             },
@@ -68,7 +73,11 @@ adSettings = {
         "NewsItem": {
             "defaultcontent1": {
                 "viewports": [{
-                    "minwidth": 0,
+                    "maxwidth": 768,
+                    "sizes": [[300, 250], [320, 240]]
+                },
+                {
+                    "minwidth": 768,
                     "sizes": [300, 250]
                 }]
             },
@@ -95,7 +104,11 @@ adSettings = {
         "SportItem": {
             "defaultcontent1": {
                 "viewports": [{
-                    "minwidth": 0,
+                    "maxwidth": 768,
+                    "sizes": [[300, 250], [320, 240]]
+                },
+                {
+                    "minwidth": 768,
                     "sizes": [300, 250]
                 }]
             },
@@ -131,7 +144,11 @@ adSettings = {
         "OverigItem": {
             "defaultcontent1": {
                 "viewports": [{
-                    "minwidth": 0,
+                    "maxwidth": 768,
+                    "sizes": [[300, 250], [320, 240]]
+                },
+                {
+                    "minwidth": 768,
                     "sizes": [300, 250]
                 }]
             },
