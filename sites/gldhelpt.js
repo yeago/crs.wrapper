@@ -88,7 +88,7 @@ adSettings = {
                     "maxwidth": 768,    
                     "sizes": [320, 50]
                   }]
-            },
+            }
         }
     }
 }

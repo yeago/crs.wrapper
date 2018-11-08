@@ -72,9 +72,9 @@ adSettings = {
         "ArticleList": {
             "bannerATF": {
                 "viewports": [{
-					"minwidth": 1040,
-					"sizes": [320, 50]
-				}]
+                    "minwidth": 1040,
+                    "sizes": [320, 50]
+                }]
             },
             "bannerATF_mobile": {
                 "viewports": [{
