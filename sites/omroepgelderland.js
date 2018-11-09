@@ -1,4 +1,5 @@
 adSettings = {
+    "expectedCmp": "cookiebot",
     "dfpNetworkcode": 38496904,
     "siteName": "omroepgelderland",
     "prebid": true,
@@ -425,7 +426,14 @@ adSettings = {
     adManager.async = true; 
     adManager.type = 'text/javascript'; 
     var useSSL = 'https:' == document.location.protocol;
-    adManager.src = (useSSL ? 'https:' : 'http:') + '//crs-media-cdn.nl/admanager.min.js';
+
+    if(window.location.href.includes('staging')){
+        adManager.src = (useSSL ? 'https:' : 'http:') + '//crs-media-cdn.nl/admanager-cookiebot.js';
+    }
+    else{
+        adManager.src = (useSSL ? 'https:' : 'http:') + '//crs-media-cdn.nl/admanager.min.js';
+    }
+
     var node = document.getElementsByTagName('script')[0]; 
     node.parentNode.insertBefore(adManager, node);
 }()

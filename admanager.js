@@ -8,18 +8,21 @@ var section = getSection();
 var targeting = getTargeting(section);
 var gotAds = false;
 
-setGoogleTag();
 pickAdFlow();
 
 function pickAdFlow(){
     var cmp = hasCmp()
+    setGoogleTag(cmp);
     if(cmp){
         initCmpAds(cmp)
     }
-    else{
-        if(hasLegacyConsent()){
-            loadAds(cmp);
-        }
+    else if(adSettings.expectedCmp=='cookiebot'){
+        window.addEventListener('CookiebotOnLoad', function () {
+            loadAds(hasCmp('cookiebot'))
+        }, false);
+    }
+    else if(hasLegacyConsent()){
+        loadAds(cmp);
     }
 };
 
@@ -33,11 +36,9 @@ function initCmpAds(cmp){
                 loadAdsOnConsentEvent(cmp);
             }
         })
-    };
-    if(cmp=='cookiebot'){
-        window.addEventListener('CookiebotOnLoad', function () {
-            loadAds(cmp)
-        }, false);
+    }
+    else if(cmp=='cookiebot'){
+        loadAds(cmp);
     }
 }
 
@@ -46,7 +47,7 @@ function loadAds(cmp){
         loadPrebidJs(function(){
             var visibleAdslots = getAdslots();
             loadPrebid(visibleAdslots, section, cmp);
-            defineAdslots(visibleAdslots, targeting, cmp);
+            defineAdslots(visibleAdslots, targeting);
             renderAds(visibleAdslots);
         })
     })
@@ -60,7 +61,7 @@ function loadAdserverOnConsentEvent(cmp){
         jQuery.getScript(prebidUrl);
         var visibleAdslots = getAdslots();
         loadPrebid(visibleAdslots, section, cmp);
-        defineAdslots(visibleAdslots, targeting, cmp);
+        defineAdslots(visibleAdslots, targeting);
         renderAds(visibleAdslots);
     });
 }
@@ -79,14 +80,15 @@ function loadAdsOnConsentEvent(cmp){
 };
 
 function setGoogleTag(cmp){
-    googletag.cmd.push(function() {
-    googletag.pubads().disableInitialLoad();
-    });
-    if(!getGoogleConsent(cmp))
-    {
+    if(!getGoogleConsent(cmp)){
         googletag.cmd.push(function() {
             googletag.pubads().disableInitialLoad()
             googletag.pubads().setRequestNonPersonalizedAds(1)
+        });
+    }
+    else{
+        googletag.cmd.push(function() {
+            googletag.pubads().disableInitialLoad();
         });
     }
 };
@@ -309,7 +311,7 @@ function loadPrebidJs(callback){
     callback();
 };
 
-function defineAdslots(visibleAdslots, targeting, cmp){
+function defineAdslots(visibleAdslots, targeting){
     googletag.cmd.push(function() {
         for (adslot in visibleAdslots){
             var dfpAdslot = '/' + adSettings.dfpNetworkcode + '/' + adSettings.siteName + '-' + adslot;
@@ -525,6 +527,7 @@ function getDfpConsent(cmp){
     }
 
     else if(cmp=='faktor'){
+
         window.__cmp('addEventListener', 'cmpReady', function (){
             window.__cmp('getAdditionalVendorConsents', undefined, function(data) {
                 if (data.purposeConsents[1] && data.vendorConsents[3]) {

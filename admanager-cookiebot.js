@@ -8,22 +8,51 @@ var section = getSection();
 var targeting = getTargeting(section);
 var gotAds = false;
 
-setGoogleTag();
 pickAdFlow();
+
+
+window.addEventListener('CookiebotOnLoad', function () {
+            console.log('CookiebotOnLoad');
+        }, false);
+window.addEventListener('CookiebotOnAccept', function () {
+            console.log('CookiebotOnAccept');
+        }, false);
+window.addEventListener('CookiebotOnDecline', function () {
+            console.log('CookiebotOnDecline');
+        }, false);
+window.addEventListener('CookiebotOnDialogInit', function () {
+            console.log('CookiebotOnDialogInit');
+        }, false);
+window.addEventListener('CookiebotOnDialogDisplay', function () {
+            console.log('CookiebotOnDialogDisplay');
+        }, false);
+window.addEventListener('CookiebotOnTagsExecuted', function () {
+            console.log('CookiebotOnTagsExecuted');
+        }, false);
+
+
 
 function pickAdFlow(){
     var cmp = hasCmp()
     if(cmp){
         initCmpAds(cmp)
     }
-    else{
-        if(hasLegacyConsent()){
-            loadAds(cmp);
-        }
+    else if(adSettings.expectedCmp=='cookiebot'){
+        console.log("cookiebot not yet loaded!")
+        window.addEventListener('CookiebotOnLoad', function () {
+            console.log('cookiebot is here');
+            setGoogleTag('cookiebot');
+            loadAds(hasCmp('cookiebot'))
+        }, false);
+    }
+    else if(hasLegacyConsent()){
+        setGoogleTag(cmp);
+        loadAds(cmp);
     }
 };
 
 function initCmpAds(cmp){
+    setGoogleTag(cmp);
     if (cmp=='faktor'){
         window.__cmp('addEventListener', 'cmpReady', function (){
             if(getDfpConsent(cmp)){
@@ -33,11 +62,9 @@ function initCmpAds(cmp){
                 loadAdsOnConsentEvent(cmp);
             }
         })
-    };
-    if(cmp=='cookiebot'){
-        window.addEventListener('CookiebotOnLoad', function () {
-            loadAds(cmp)
-        }, false);
+    }
+    else if(cmp=='cookiebot'){
+        loadAds(cmp);
     }
 }
 
@@ -46,7 +73,7 @@ function loadAds(cmp){
         loadPrebidJs(function(){
             var visibleAdslots = getAdslots();
             loadPrebid(visibleAdslots, section, cmp);
-            defineAdslots(visibleAdslots, targeting, cmp);
+            defineAdslots(visibleAdslots, targeting);
             renderAds(visibleAdslots);
         })
     })
@@ -60,7 +87,7 @@ function loadAdserverOnConsentEvent(cmp){
         jQuery.getScript(prebidUrl);
         var visibleAdslots = getAdslots();
         loadPrebid(visibleAdslots, section, cmp);
-        defineAdslots(visibleAdslots, targeting, cmp);
+        defineAdslots(visibleAdslots, targeting);
         renderAds(visibleAdslots);
     });
 }
@@ -79,14 +106,16 @@ function loadAdsOnConsentEvent(cmp){
 };
 
 function setGoogleTag(cmp){
-    googletag.cmd.push(function() {
-    googletag.pubads().disableInitialLoad();
-    });
-    if(!getGoogleConsent(cmp))
-    {
+    if(!getGoogleConsent(cmp)){
+        console.log("loading setRequestNonPersonalizedAds")
         googletag.cmd.push(function() {
             googletag.pubads().disableInitialLoad()
             googletag.pubads().setRequestNonPersonalizedAds(1)
+        });
+    }
+    else{
+        googletag.cmd.push(function() {
+            googletag.pubads().disableInitialLoad();
         });
     }
 };
@@ -309,7 +338,7 @@ function loadPrebidJs(callback){
     callback();
 };
 
-function defineAdslots(visibleAdslots, targeting, cmp){
+function defineAdslots(visibleAdslots, targeting){
     googletag.cmd.push(function() {
         for (adslot in visibleAdslots){
             var dfpAdslot = '/' + adSettings.dfpNetworkcode + '/' + adSettings.siteName + '-' + adslot;
