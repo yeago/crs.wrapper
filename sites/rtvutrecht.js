@@ -1,6 +1,9 @@
 adSettings = {
     "dfpNetworkcode": "22930928",
     "siteName": "rtvutrecht",
+    "expectedCmp": "faktor",
+    "lazyLoading": false,
+    "lazyLoadingOffset": 100,
     "prebid": true,
     "PREBID_TIMEOUT": 1400,
     "hbSettings": {

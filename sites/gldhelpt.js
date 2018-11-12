@@ -1,6 +1,9 @@
 adSettings = {
     "dfpNetworkcode": 38496904,
-    "siteName": "gldhelpt",
+    "siteName": "GLDHelpt",
+    "expectedCmp": "faktor",
+    "lazyLoading": false,
+    "lazyLoadingOffset": 100,
     "prebid": true,
     "PREBID_TIMEOUT": 1400,
     "hbSettings": {
@@ -37,53 +40,53 @@ adSettings = {
     },
     "adslots": {
         "Home": {
-            "GLD_Helpt_desktop_headerbanner": {
+            "desktop_headerbanner": {
                 "viewports": [{
                     "minwidth": 1200,
                     "sizes": [728, 90]
                 }]
             },
-            "GLD_Helpt_desktop_sidebar1": {
+            "desktop_sidebar1": {
                 "viewports": [{
                     "minwidth": 1200,
                     "sizes": [300, 250]
                 }]
             },
-            "GLD_Helpt_desktop_content1": {
+            "desktop_content1": {
                 "viewports": [{
                     "minwidth": 1200,
                     "sizes": [728, 90]
                 }]
             },
-            "GLD_Helpt_tablet_headerbanner": {
+            "tablet_headerbanner": {
                 "viewports": [{
                     "minwidth": 768,
                     "maxwidth": 1200,
                     "sizes": [320, 50]
                 }]
             },
-            "GLD_Helpt_tablet_sidebar1": {
+            "tablet_sidebar1": {
                 "viewports": [{
                     "minwidth": 992,
                     "maxwidth": 1200,
                     "sizes": [300, 250]
                 }]
             },
-            "GLD_helpt_tablet_content1": {
+            "tablet_content1": {
                 "viewports": [{
                     "minwidth": 920,
                     "maxwidth": 1200,   
                     "sizes": [728, 90]
                 }]
             },          
-            "GLD_helpt_tablet_content2": {
+            "tablet_content2": {
                 "viewports": [{
                     "minwidth": 768,
                     "maxwidth": 991,    
                     "sizes": [300, 250]
                   }]
             },
-            "GLD_helpt_mobile_headerbanner": {
+            "mobile_headerbanner": {
                 "viewports": [{
                     "maxwidth": 768,    
                     "sizes": [320, 50]
@@ -91,7 +94,7 @@ adSettings = {
             }
         }
     }
-}
+};
 
 !function() {
     var adManager = document.createElement('script');

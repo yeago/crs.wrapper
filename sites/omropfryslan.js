@@ -1,6 +1,9 @@
 adSettings = {
     "dfpNetworkcode": 40817610,
     "siteName": "omropfryslan",
+    "expectedCmp": "faktor",
+    "lazyLoading": false,
+    "lazyLoadingOffset": 100,
     "prebid": true,
     "PREBID_TIMEOUT": 1400,
     "hbSettings": {

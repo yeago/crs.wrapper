@@ -591,10 +591,10 @@ function getGoogleConsent(cmp){
                 }
             });
         }
-        if (cmp == 'cookiebot' && !Cookiebot.consent.marketing){
+        if (cmp == 'cookiebot' && !window.Cookiebot.consent.marketing){
             return false;
         }
-        else if(cmp == 'cookiebot' && Cookiebot.consent.marketing){
+        else if(cmp == 'cookiebot' && window.Cookiebot.consent.marketing){
             return true;
         }
     }
@@ -603,7 +603,7 @@ function getGoogleConsent(cmp){
 
 function getPrebidConsent(cmp){
     if(cmp && cmp=='cookiebot'){
-        if(!window.Cookiebot.marketing){
+        if(!window.Cookiebot.consent.marketing){
             return false;
         }
         else{
@@ -614,7 +614,6 @@ function getPrebidConsent(cmp){
         return true
     }
 }
-
 
 //function also used by publishers directly! ensure backward compatibilty
 function hasCmp(){

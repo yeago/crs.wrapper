@@ -1,6 +1,9 @@
 adSettings = {
     "dfpNetworkcode": 21630220963,
     "siteName": "omroepzeeland",
+    "expectedCmp": "faktor",
+    "lazyLoading": false,
+    "lazyLoadingOffset": 100,
     "prebid": true,
     "PREBID_TIMEOUT": 1400,
     "hbSettings": {

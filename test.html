@@ -26,6 +26,9 @@ adSettings = {
     //"dfpNetworkcode": 12779449,
     "dfpNetworkcode": 21722727094,
     "siteName": "rtvoost",
+    "expectedCmp": "faktor",
+    "lazyLoading": true,
+    "lazyLoadingOffset": 100,
     "prebid": true,
     "PREBID_TIMEOUT": 1400,
     "hbSettings": {
@@ -419,7 +422,7 @@ function pickAdFlow(){
         initCmpAds(cmp)
     }
     else{
-        if(hasLegacyConsent()){
+        if(hasLegacyConsent() || !hasLegacyConsent()){
             loadAds(cmp);
         }
     }
@@ -624,15 +627,19 @@ function getAdslots() {
             minwidth = viewport.minwidth;
             maxwidth = viewport.maxwidth;
             if (!maxwidth && minwidth && minwidth <= windowWidth){
+                visibleAdslots[adslot] = {}
                 visibleAdslots[adslot] = viewport.sizes;
             }
             else if (maxwidth && !minwidth && maxwidth >= windowWidth){
+                visibleAdslots[adslot] = {}
                 visibleAdslots[adslot] = viewport.sizes;
             }
             else if (maxwidth && minwidth && maxwidth >= windowWidth && minwidth < windowWidth){
+                visibleAdslots[adslot] = {}
                 visibleAdslots[adslot] = viewport.sizes;
             }
             else if (!maxwidth && !minwidth){
+                visibleAdslots[adslot] = {}
                 visibleAdslots[adslot] = viewport.sizes;
             }
         }
@@ -731,8 +738,14 @@ function defineAdslots(visibleAdslots, targeting, cmp){
     })
 };
 
-function renderAds(visibleAdslots){
-    for(var adslot in visibleAdslots){
+function loadSingleAd(adslot){
+    var exists = false;
+    try{
+        exists = document.getElementById('ad-' + adslot).parentNode;
+    }
+    catch(err){}
+
+    if(!exists){
         var adslotCompleted = false;
         var gotParent = false;
 
@@ -762,7 +775,61 @@ function renderAds(visibleAdslots){
             }
         }(10, adslot, gotParent))
     }
-    gotAds = true;
+}
+
+function divVisible(adslot, onload){
+    var lazyLoadingOffset, lazyLoadingOffset = adSettings.lazyLoadingOffset || (lazyLoadingOffset = 0, lazyLoadingOffset);
+    console.log(lazyLoadingOffset)
+    try{
+        var elementPos = document.getElementById(adslot).offsetTop;
+    }
+    catch(err){
+        console.log("ad div", adslot, "not found on site")
+        return false
+    }
+
+    if(onload){
+        var windowPos = 0;
+    }
+    else{
+        var windowPos = document.body.scrollTop;
+    }
+
+    var windowBottom = window.innerHeight + windowPos;
+    if (windowBottom > (elementPos - lazyLoadingOffset)){
+        console.log(adslot, "windowBottom", windowBottom, "element:", elementPos, lazyLoadingOffset, (windowBottom - (elementPos - lazyLoadingOffset)));
+        return true
+    }
+
+    return false
+}
+
+
+function renderAds(visibleAdslots){
+    console.log(visibleAdslots);
+    if(adSettings.lazyLoading){
+        //check for adunits visible onload
+        window.onload = function(){
+            for(var adslot in visibleAdslots){
+                if(divVisible(adslot, true)){
+                    loadSingleAd(adslot)
+                }
+            }
+        }
+        window.onscroll = function() {
+            for(var adslot in visibleAdslots){
+                if(divVisible(adslot, false)){
+                    loadSingleAd(adslot)
+                }
+            }    
+        }
+    } 
+    else{
+        for(var adslot in visibleAdslots){
+            loadSingleAd(adslot)
+        }
+        gotAds = true;
+    }
 };
 
 function getSection(){
@@ -1047,50 +1114,79 @@ function hasLegacyConsent(){
 
     </head>
 
+
+<script>
+    window.onload = function(){
+        console.log("loaded")
+        var windowPos = document.body.scrollTop;
+        var windowBottom = window.innerHeight + windowPos;
+        console.log(windowPos);
+        console.log(windowBottom);
+
+        var elementPos = document.getElementById('house_btf_rechts').offsetTop;
+        if (windowBottom < elementPos){
+            console.log("visible");
+        }
+
+    };
+    window.onscroll = function() {
+        console.log("scrolled")
+        var windowPos = document.body.scrollTop;
+        var windowBottom = window.innerHeight + windowPos;
+        var bannerOffset = 100;
+        //console.log(windowPos);
+        //console.log(windowBottom);
+        var elementPos = document.getElementById('house_btf_rechts').offsetTop;
+        if (windowBottom > (elementPos - bannerOffset)){
+            console.log("visible: ", windowBottom, elementPos);
+        }
+    };
+</script>
+
     <body>
-        <div>
+        <div style="height:90px">
             leaderboard (320x50 < 600 < 728x90)
             <div id="leaderboard">
             </div>
         </div>
 
-        <div>
+        <div style="height:300px">
             rectangleBTF (320x50 < 600 < 300x250)
             <div id="rectangleBTF">
             </div>
         </div>
 
-        <div>
+        <div style="height:300px">
             rectangleATF (320x50 < 600 < 300x250)
             <div id="rectangleATF">
             </div>
         </div>
 
-        <div>
+        <div style="height:250px">
             Ligatus_636 (width > 0)
             <div id="Ligatus_636">
             </div>
         </div>
 
-        <div>
+        <div style="height:170px">
             house_atf_top (width > 0)
             <div id="house_atf_top">
             </div>
         </div>
 
-        <div>
+        <div style="height:170px">
             house_btf_link (width > 0)
             <div id="house_btf_link">
             </div>
         </div>
         
-        <div>
+        <div style="height:170px">
             house_btf_midden (width > 0)
             <div id="house_btf_midden">
             </div>
         </div>
 
-        <div>
+        <div style="height:170px">
             house_btf_rechts (width > 0)
             <div id="house_btf_rechts">
             </div>

@@ -1,7 +1,9 @@
 adSettings = {
-    "expectedCmp": "cookiebot",
     "dfpNetworkcode": 38496904,
     "siteName": "omroepgelderland",
+    "expectedCmp": "cookiebot",
+    "lazyLoading": false,
+    "lazyLoadingOffset": 100,
     "prebid": true,
     "PREBID_TIMEOUT": 1400,
     "hbSettings": {
@@ -17,8 +19,7 @@ adSettings = {
         },
         "criteo": {
             "active": true,
-            "zoneIds": 
-            {
+            "zoneIds": {
                 "300x250": "1269861",
                 "320x50": "1269862",
                 "728x90": "1269863"
@@ -60,15 +61,8 @@ adSettings = {
             },
             "headerbanner": {
                 "viewports": [{
-                    "minwidth": 1200,
-                    "sizes": [728, 90]
-                }]
-            },
-            "mobileheaderbanner": {
-                "viewports": [{
                     "minwidth": 992,
-                    "maxwidth": 1200,
-                    "sizes": [320, 50]
+                    "sizes": [728, 90]
                 }]
             },
             "defaultsidebar1": {
@@ -105,15 +99,8 @@ adSettings = {
             },
             "headerbanner": {
                 "viewports": [{
-                    "minwidth": 1200,
-                    "sizes": [728, 90]
-                }]
-            },
-            "mobileheaderbanner": {
-                "viewports": [{
                     "minwidth": 992,
-                    "maxwidth": 1200,
-                    "sizes": [320, 50]
+                    "sizes": [728, 90]
                 }]
             },
             "defaultsidebar1": {
@@ -132,15 +119,8 @@ adSettings = {
         "NewsItem": {
             "headerbanner": {
                 "viewports": [{
-                    "minwidth": 1200,
-                    "sizes": [728, 90]
-                }]
-            },
-            "mobileheaderbanner": {
-                "viewports": [{
                     "minwidth": 992,
-                    "maxwidth": 1200,
-                    "sizes": [320, 50]
+                    "sizes": [728, 90]
                 }]
             },
             "defaultsidebar1": {
@@ -189,15 +169,8 @@ adSettings = {
             },
             "headerbanner": {
                 "viewports": [{
-                    "minwidth": 1200,
-                    "sizes": [728, 90]
-                }]
-            },
-            "mobileheaderbanner": {
-                "viewports": [{
                     "minwidth": 992,
-                    "maxwidth": 1200,
-                    "sizes": [320, 50]
+                    "sizes": [728, 90]
                 }]
             },
             "defaultsidebar1": {
@@ -222,15 +195,8 @@ adSettings = {
             },
             "headerbanner": {
                 "viewports": [{
-                    "minwidth": 1200,
-                    "sizes": [728, 90]
-                }]
-            },
-            "mobileheaderbanner": {
-                "viewports": [{
                     "minwidth": 992,
-                    "maxwidth": 1200,
-                    "sizes": [320, 50]
+                    "sizes": [728, 90]
                 }]
             },
             "defaultsidebar1": {
@@ -262,7 +228,7 @@ adSettings = {
             },
             "headerbanner": {
                 "viewports": [{
-                    "minwidth": 1200,
+                    "minwidth": 992,
                     "sizes": [728, 90]
                 }]
             },
@@ -288,15 +254,8 @@ adSettings = {
             },
             "headerbanner": {
                 "viewports": [{
-                    "minwidth": 1200,
-                    "sizes": [728, 90]
-                }]
-            },
-            "mobileheaderbanner": {
-                "viewports": [{
                     "minwidth": 992,
-                    "maxwidth": 1200,
-                    "sizes": [320, 50]
+                    "sizes": [728, 90]
                 }]
             },
             "defaultsidebar1": {
@@ -321,15 +280,8 @@ adSettings = {
             },
             "headerbanner": {
                 "viewports": [{
-                    "minwidth": 1200,
-                    "sizes": [728, 90]
-                }]
-            },
-            "mobileheaderbanner": {
-                "viewports": [{
                     "minwidth": 992,
-                    "maxwidth": 1200,
-                    "sizes": [320, 50]
+                    "sizes": [728, 90]
                 }]
             },
             "defaultsidebar1": {
@@ -354,15 +306,8 @@ adSettings = {
             },
             "headerbanner": {
                 "viewports": [{
-                    "minwidth": 1200,
-                    "sizes": [728, 90]
-                }]
-            },
-            "mobileheaderbanner": {
-                "viewports": [{
                     "minwidth": 992,
-                    "maxwidth": 1200,
-                    "sizes": [320, 50]
+                    "sizes": [728, 90]
                 }]
             },
             "defaultsidebar1": {
@@ -394,15 +339,8 @@ adSettings = {
             },
             "headerbanner": {
                 "viewports": [{
-                    "minwidth": 1200,
-                    "sizes": [728, 90]
-                }]
-            },
-            "mobileheaderbanner": {
-                "viewports": [{
                     "minwidth": 992,
-                    "maxwidth": 1200,
-                    "sizes": [320, 50]
+                    "sizes": [728, 90]
                 }]
             },
             "defaultsidebar1": {

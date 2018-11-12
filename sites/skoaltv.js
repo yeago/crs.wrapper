@@ -1,10 +1,9 @@
-section_mapping = {
-    "Home": "1104"
-    }
-
 adSettings = {
     "dfpNetworkcode": "40817610",
     "siteName": "skoaltv",
+    "expectedCmp": "faktor",
+    "lazyLoading": false,
+    "lazyLoadingOffset": 100,
     "prebid": false,
     "PREBID_TIMEOUT": 1400,
     "hbSettings": {

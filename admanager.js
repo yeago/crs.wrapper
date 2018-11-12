@@ -520,26 +520,25 @@ function pbIx(size){
 
 function getDfpConsent(cmp){
     //vendor for Google = 3
+    var dfpConsent = false;
     if(!cmp){
         if(hasLegacyConsent()){
-            return true;
+            dfpConsent = true;
         }
     }
-
     else if(cmp=='faktor'){
-
         window.__cmp('addEventListener', 'cmpReady', function (){
             window.__cmp('getAdditionalVendorConsents', undefined, function(data) {
                 if (data.purposeConsents[1] && data.vendorConsents[3]) {
-                    return true;
+                    dfpConsent = true;
                 }
             });
         });
     }
-
     else if(cmp=='cookiebot'){
-        return true;
+        dfpConsent = true;
     }
+    return dfpConsent;
 }
 
 function getGoogleConsent(cmp){
@@ -564,10 +563,10 @@ function getGoogleConsent(cmp){
                 }
             });
         }
-        if (cmp == 'cookiebot' && !Cookiebot.consent.marketing){
+        if (cmp == 'cookiebot' && !window.Cookiebot.consent.marketing){
             return false;
         }
-        else if(cmp == 'cookiebot' && Cookiebot.consent.marketing){
+        else if(cmp == 'cookiebot' && window.Cookiebot.consent.marketing){
             return true;
         }
     }
@@ -576,7 +575,7 @@ function getGoogleConsent(cmp){
 
 function getPrebidConsent(cmp){
     if(cmp && cmp=='cookiebot'){
-        if(!window.Cookiebot.marketing){
+        if(!window.Cookiebot.consent.marketing){
             return false;
         }
         else{

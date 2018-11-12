@@ -4,6 +4,9 @@ adSettings = {
     //"dfpNetworkcode": 12779449,
     "dfpNetworkcode": 21722727094,
     "siteName": "rtvoost",
+    "lazyLoading": false,
+    "lazyLoadingOffset": 100,
+    "expectedCmp": "faktor",
     "prebid": true,
     "PREBID_TIMEOUT": 1400,
     "hbSettings": {
