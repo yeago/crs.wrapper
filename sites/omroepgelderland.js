@@ -3,7 +3,7 @@ adSettings = {
     "siteName": "omroepgelderland",
     "expectedCmp": "cookiebot",
     "lazyLoading": false,
-    "lazyLoadingOffset": 100,
+    "lazyLoadingOffset": 10,
     "prebid": true,
     "PREBID_TIMEOUT": 1400,
     "hbSettings": {

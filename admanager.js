@@ -48,7 +48,7 @@ function loadAds(cmp){
             var visibleAdslots = getAdslots();
             loadPrebid(visibleAdslots, section, cmp);
             defineAdslots(visibleAdslots, targeting);
-            renderAds(visibleAdslots);
+            renderAds(visibleAdslots, false);
         })
     })
 };
@@ -62,7 +62,7 @@ function loadAdserverOnConsentEvent(cmp){
         var visibleAdslots = getAdslots();
         loadPrebid(visibleAdslots, section, cmp);
         defineAdslots(visibleAdslots, targeting);
-        renderAds(visibleAdslots);
+        renderAds(visibleAdslots, true);
     });
 }
 
@@ -331,8 +331,103 @@ function defineAdslots(visibleAdslots, targeting){
     })
 };
 
-function renderAds(visibleAdslots){
+function divInView(adslot, onload){
+    try{
+        //no need to do this if ad already loaded.
+        var exists = document.getElementById("ad-" + adslot);
+        if (exists){
+            return false
+        }
+    }
+    catch(err){}
+
+    var lazyLoadingOffset, lazyLoadingOffset = adSettings.lazyLoadingOffset || (lazyLoadingOffset = 0, lazyLoadingOffset);
+    try{
+        var element = document.getElementById(adslot);
+        var yPosition = 0;
+
+        while(element){
+            yPosition += (element.offsetTop - element.scrollTop + element.clientTop);
+            element = element.offsetParent;
+        }
+    }
+    catch(err){
+        return false
+    }
+
+    if(onload){
+        var windowPos = 0;
+    }
+    else{
+        var windowPos = window.pageYOffset;
+    }
+
+    var windowBottom = window.innerHeight + windowPos;
+    if (windowBottom > (yPosition - lazyLoadingOffset)){
+        console.log(adslot, "visible: ", windowBottom, (yPosition - lazyLoadingOffset))
+        return true
+    }
+    console.log(adslot, "not visible", windowBottom, (yPosition - lazyLoadingOffset))
+    return false
+}
+
+function renderVisibleAdsOnLoadEvent(visibleAdslots)
+{
+    window.onload = function(){
+        for(var adslot in visibleAdslots){
+            if(divInView(adslot, true)){
+                loadSingleAd(adslot)
+            }
+        }
+    }
+};
+
+function renderVisibleAdsOnScrollEvent(visibleAdslots)
+{
+    window.onscroll = function() {
+        for(var adslot in visibleAdslots){
+            if(divInView(adslot, false)){
+                loadSingleAd(adslot)
+            }
+        }    
+    }
+};
+
+function renderVisibleAdsWithoutEvent(visibleAdslots)
+{
     for(var adslot in visibleAdslots){
+        if(divInView(adslot, false)){
+            loadSingleAd(adslot)
+        }
+    }    
+};
+
+function renderAds(visibleAdslots, missedOnLoad){
+    if(adSettings.lazyLoading && !missedOnLoad){
+        renderVisibleAdsOnLoadEvent(visibleAdslots)
+        renderVisibleAdsOnScrollEvent(visibleAdslots)
+    }
+    else if(adSettings.lazyLoading && missedOnLoad){
+        //if waiting for CMP event, can't use onload.
+        renderVisibleAdsWithoutEvent(visibleAdslots)
+        renderVisibleAdsOnScrollEvent(visibleAdslots)
+    }
+    else{
+        for(var adslot in visibleAdslots){
+            loadSingleAd(adslot)
+        }
+        gotAds = true;
+    }
+};
+
+function loadSingleAd(adslot){
+    var exists = false;
+    try{
+        exists = document.getElementById('ad-' + adslot).parentNode;
+    }
+    catch(err){}
+
+    if(!exists){
         var adslotCompleted = false;
         var gotParent = false;
 
@@ -362,8 +457,7 @@ function renderAds(visibleAdslots){
             }
         }(10, adslot, gotParent))
     }
-    gotAds = true;
-};
+}
 
 function getSection(){
     var element = document.querySelector('meta[property="crsmediasection"]');

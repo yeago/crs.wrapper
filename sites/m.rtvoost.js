@@ -1,9 +1,10 @@
+//legacy website - not in production
 adSettings = {
     "dfpNetworkcode": 12779449,
     "siteName": "m.rtvoost",
     "expectedCmp": "faktor",
     "lazyLoading": false,
-    "lazyLoadingOffset": 100,
+    "lazyLoadingOffset": 10,
     "prebid": true,
     "PREBID_TIMEOUT": 1400,
     "hbSettings": {

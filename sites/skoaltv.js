@@ -3,7 +3,7 @@ adSettings = {
     "siteName": "skoaltv",
     "expectedCmp": "faktor",
     "lazyLoading": false,
-    "lazyLoadingOffset": 100,
+    "lazyLoadingOffset": 10,
     "prebid": false,
     "PREBID_TIMEOUT": 1400,
     "hbSettings": {

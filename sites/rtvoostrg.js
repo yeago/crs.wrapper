@@ -4,7 +4,7 @@ adSettings = {
     "siteName": "rtvoost",
     "expectedCmp": "faktor",
     "lazyLoading": true,
-    "lazyLoadingOffset": 100,
+    "lazyLoadingOffset": 10,
     "prebid": true,
     "PREBID_TIMEOUT": 1400,
     "hbSettings": {
