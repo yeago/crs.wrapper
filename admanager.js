@@ -364,10 +364,8 @@ function divInView(adslot, onload){
 
     var windowBottom = window.innerHeight + windowPos;
     if (windowBottom > (yPosition - lazyLoadingOffset)){
-        console.log(adslot, "visible: ", windowBottom, (yPosition - lazyLoadingOffset))
         return true
     }
-    console.log(adslot, "not visible", windowBottom, (yPosition - lazyLoadingOffset))
     return false
 }
 

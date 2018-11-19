@@ -153,7 +153,7 @@ adSettings = {
     adManager.async = true; 
     adManager.type = 'text/javascript'; 
     var useSSL = 'https:' == document.location.protocol;
-    adManager.src = (useSSL ? 'https:' : 'http:') + '//crs-media-cdn.nl/admanager.js';
+    adManager.src = (useSSL ? 'https:' : 'http:') + '//crs-media-cdn.nl/admanager.min.js';
     var node = document.getElementsByTagName('script')[0]; 
     node.parentNode.insertBefore(adManager, node);
 }()
