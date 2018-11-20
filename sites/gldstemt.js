@@ -1,7 +1,7 @@
 adSettings = {
     "dfpNetworkcode": "38496904",
     "siteName": "gldstemt",
-    "expectedCmp": "cookiebot",
+    "expectedCmp": "cookiebot_notlive",
     "lazyLoading": false,
     "lazyLoadingOffset": 10,
     "prebid": true,
