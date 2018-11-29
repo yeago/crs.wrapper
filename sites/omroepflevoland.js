@@ -227,7 +227,18 @@ adSettings = {
                     "sizes": [[300, 250]]
                 }]
             },
-
+            "special1": {
+                "viewports" : [{
+                    "minwidth": 700,
+                    "sizes": [[760, 300]]
+                }]
+            },
+            "special2": {
+                "viewports" : [{
+                    "minwidth": 700,
+                    "sizes": [[760, 580]]
+                }]
+            }
         },  
         "5": {
              "lay2lead1": {
