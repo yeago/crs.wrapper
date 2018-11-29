@@ -370,30 +370,27 @@ function divInView(adslot, onload){
     return false
 }
 
-function renderVisibleAdsOnLoadEvent(visibleAdslots)
-{
-    window.onload = function(){
+function renderVisibleAdsOnLoadEvent(visibleAdslots){
+    window.addEventListener("load", function(){
         for(var adslot in visibleAdslots){
             if(divInView(adslot, true)){
                 loadSingleAd(adslot)
             }
         }
-    }
+    })
 };
 
-function renderVisibleAdsOnScrollEvent(visibleAdslots)
-{
-    window.onscroll = function() {
+function renderVisibleAdsOnScrollEvent(visibleAdslots){
+    window.addEventListener("scroll", function() {
         for(var adslot in visibleAdslots){
             if(divInView(adslot, false)){
                 loadSingleAd(adslot)
             }
         }    
-    }
+    })
 };
 
-function renderVisibleAdsWithoutEvent(visibleAdslots)
-{
+function renderVisibleAdsWithoutEvent(visibleAdslots){
     for(var adslot in visibleAdslots){
         if(divInView(adslot, false)){
             loadSingleAd(adslot)
