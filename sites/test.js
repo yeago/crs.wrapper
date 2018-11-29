@@ -43,8 +43,8 @@ adSettings = {
         },
         "openx": {
             "active": false,
-            "delDomain": "",
-            "unit": "",
+            "delDomain": "orn-d.openx.net",
+            "unit": "540492878",
         }
     },
     "adslots": {

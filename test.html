@@ -28,7 +28,7 @@ adSettings = {
     "siteName": "rtvoost",
     "expectedCmp": "faktor",
     "lazyLoading": true,
-    "lazyLoadingOffset": 100,
+    "lazyLoadingOffset": -100,
     "prebid": true,
     "PREBID_TIMEOUT": 1400,
     "hbSettings": {
@@ -747,7 +747,7 @@ function divInView(adslot, onload){
     }
     catch(err){}
 
-    var lazyLoadingOffset, lazyLoadingOffset = adSettings.lazyLoadingOffset || (lazyLoadingOffset = 0, lazyLoadingOffset);
+    var lazyLoadingOffset = adSettings.lazyLoadingOffset || 0;
     try{
         var element = document.getElementById(adslot);
         var yPosition = 0;
@@ -775,26 +775,26 @@ function divInView(adslot, onload){
     return false
 }
 
-function renderVisibleAdsOnLoadEvent(visibleAdslots)
-{
-    window.onload = function(){
+function renderVisibleAdsOnLoadEvent(visibleAdslots){
+    window.addEventListener('load', function(){
+        console.log('loadEvent');
         for(var adslot in visibleAdslots){
             if(divInView(adslot, true)){
                 loadSingleAd(adslot)
             }
         }
-    }
+    })
 };
 
-function renderVisibleAdsOnScrollEvent(visibleAdslots)
-{
-    window.onscroll = function() {
+function renderVisibleAdsOnScrollEvent(visibleAdslots){
+    window.addEventListener('scroll', function(){
+        console.log('scrollEvent');
         for(var adslot in visibleAdslots){
             if(divInView(adslot, false)){
                 loadSingleAd(adslot)
             }
         }    
-    }
+    })
 };
 
 function renderVisibleAdsWithoutEvent(visibleAdslots)
