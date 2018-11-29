@@ -36,6 +36,11 @@ adSettings = {
         "ix": {
             "active": false,
             "siteId": "255033"
+        },
+        "openx": {
+            "active": false,
+            "delDomain": "",
+            "unit": "",
         }
     },
     "adslots": {
@@ -364,14 +369,7 @@ adSettings = {
     adManager.async = true; 
     adManager.type = 'text/javascript'; 
     var useSSL = 'https:' == document.location.protocol;
-
-    if(window.location.href.includes('staging')){
-        adManager.src = (useSSL ? 'https:' : 'http:') + '//crs-media-cdn.nl/admanager-cookiebot.js';
-    }
-    else{
-        adManager.src = (useSSL ? 'https:' : 'http:') + '//crs-media-cdn.nl/admanager.min.js';
-    }
-
+    adManager.src = (useSSL ? 'https:' : 'http:') + '//crs-media-cdn.nl/admanager.min.js';
     var node = document.getElementsByTagName('script')[0]; 
     node.parentNode.insertBefore(adManager, node);
 }()

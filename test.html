@@ -413,20 +413,23 @@ var section = getSection();
 var targeting = getTargeting(section);
 var gotAds = false;
 
-setGoogleTag();
 pickAdFlow();
 
 function pickAdFlow(){
     var cmp = hasCmp()
+    setGoogleTag(cmp);
     if(cmp){
         initCmpAds(cmp)
     }
-    else{
-        if(hasLegacyConsent() || !hasLegacyConsent()){
-            loadAds(cmp);
-        }
+    else if(adSettings.expectedCmp=='cookiebot'){
+        window.addEventListener('CookiebotOnLoad', function () {
+            loadAds(hasCmp('cookiebot'))
+        }, false);
     }
- };
+    else if(hasLegacyConsent()||!hasLegacyConsent()){
+        loadAds(cmp);
+    }
+};
 
 function initCmpAds(cmp){
     if (cmp=='faktor'){
@@ -438,11 +441,9 @@ function initCmpAds(cmp){
                 loadAdsOnConsentEvent(cmp);
             }
         })
-    };
-    if(cmp=='cookiebot'){
-        window.addEventListener('CookiebotOnLoad', function () {
-            loadAds(cmp)
-        }, false);
+    }
+    else if(cmp=='cookiebot'){
+        loadAds(cmp);
     }
 }
 
@@ -451,8 +452,8 @@ function loadAds(cmp){
         loadPrebidJs(function(){
             var visibleAdslots = getAdslots();
             loadPrebid(visibleAdslots, section, cmp);
-            defineAdslots(visibleAdslots, targeting, cmp);
-            renderAds(visibleAdslots);
+            defineAdslots(visibleAdslots, targeting);
+            renderAds(visibleAdslots, false);
         })
     })
 };
@@ -465,8 +466,8 @@ function loadAdserverOnConsentEvent(cmp){
         jQuery.getScript(prebidUrl);
         var visibleAdslots = getAdslots();
         loadPrebid(visibleAdslots, section, cmp);
-        defineAdslots(visibleAdslots, targeting, cmp);
-        renderAds(visibleAdslots);
+        defineAdslots(visibleAdslots, targeting);
+        renderAds(visibleAdslots, true);
     });
 }
 
@@ -484,14 +485,15 @@ function loadAdsOnConsentEvent(cmp){
 };
 
 function setGoogleTag(cmp){
-    googletag.cmd.push(function() {
-    googletag.pubads().disableInitialLoad();
-    });
-    if(!getGoogleConsent(cmp))
-    {
+    if(!getGoogleConsent(cmp)){
         googletag.cmd.push(function() {
             googletag.pubads().disableInitialLoad()
             googletag.pubads().setRequestNonPersonalizedAds(1)
+        });
+    }
+    else{
+        googletag.cmd.push(function() {
+            googletag.pubads().disableInitialLoad();
         });
     }
 };
@@ -627,19 +629,15 @@ function getAdslots() {
             minwidth = viewport.minwidth;
             maxwidth = viewport.maxwidth;
             if (!maxwidth && minwidth && minwidth <= windowWidth){
-                visibleAdslots[adslot] = {}
                 visibleAdslots[adslot] = viewport.sizes;
             }
             else if (maxwidth && !minwidth && maxwidth >= windowWidth){
-                visibleAdslots[adslot] = {}
                 visibleAdslots[adslot] = viewport.sizes;
             }
             else if (maxwidth && minwidth && maxwidth >= windowWidth && minwidth < windowWidth){
-                visibleAdslots[adslot] = {}
                 visibleAdslots[adslot] = viewport.sizes;
             }
             else if (!maxwidth && !minwidth){
-                visibleAdslots[adslot] = {}
                 visibleAdslots[adslot] = viewport.sizes;
             }
         }
@@ -718,7 +716,7 @@ function loadPrebidJs(callback){
     callback();
 };
 
-function defineAdslots(visibleAdslots, targeting, cmp){
+function defineAdslots(visibleAdslots, targeting){
     googletag.cmd.push(function() {
         for (adslot in visibleAdslots){
             var dfpAdslot = '/' + adSettings.dfpNetworkcode + '/' + adSettings.siteName + '-' + adslot;
@@ -729,13 +727,101 @@ function defineAdslots(visibleAdslots, targeting, cmp){
                 setTargeting('urlcategory1', targeting.urlCategory1).
                 setTargeting('urlcategory2', targeting.urlCategory2).
                 setTargeting('urlpath', targeting.urlPath).
-                setTargeting('keywords', targeting.keyword).
-                addService(googletag.pubads());
-        }
+                setTargeting('keywords', targeting.keyword).addService(googletag.pubads());
+            }
         googletag.pubads().collapseEmptyDivs();
         googletag.pubads().enableSingleRequest();
         googletag.enableServices();
     })
+    
+    
+};
+
+function divInView(adslot, onload){
+    try{
+        //no need to do this if ad already loaded.
+        var exists = document.getElementById("ad-" + adslot);
+        if (exists){
+            return false
+        }
+    }
+    catch(err){}
+
+    var lazyLoadingOffset, lazyLoadingOffset = adSettings.lazyLoadingOffset || (lazyLoadingOffset = 0, lazyLoadingOffset);
+    try{
+        var element = document.getElementById(adslot);
+        var yPosition = 0;
+
+        while(element){
+            yPosition += (element.offsetTop - element.scrollTop + element.clientTop);
+            element = element.offsetParent;
+        }
+    }
+    catch(err){
+        return false
+    }
+
+    if(onload){
+        var windowPos = 0;
+    }
+    else{
+        var windowPos = window.pageYOffset;
+    }
+
+    var windowBottom = window.innerHeight + windowPos;
+    if (windowBottom > (yPosition - lazyLoadingOffset)){
+        return true
+    }
+    return false
+}
+
+function renderVisibleAdsOnLoadEvent(visibleAdslots)
+{
+    window.onload = function(){
+        for(var adslot in visibleAdslots){
+            if(divInView(adslot, true)){
+                loadSingleAd(adslot)
+            }
+        }
+    }
+};
+
+function renderVisibleAdsOnScrollEvent(visibleAdslots)
+{
+    window.onscroll = function() {
+        for(var adslot in visibleAdslots){
+            if(divInView(adslot, false)){
+                loadSingleAd(adslot)
+            }
+        }    
+    }
+};
+
+function renderVisibleAdsWithoutEvent(visibleAdslots)
+{
+    for(var adslot in visibleAdslots){
+        if(divInView(adslot, false)){
+            loadSingleAd(adslot)
+        }
+    }    
+};
+
+function renderAds(visibleAdslots, missedOnLoad){
+    if(adSettings.lazyLoading && !missedOnLoad){
+        renderVisibleAdsOnLoadEvent(visibleAdslots)
+        renderVisibleAdsOnScrollEvent(visibleAdslots)
+    }
+    else if(adSettings.lazyLoading && missedOnLoad){
+        //if waiting for CMP event, can't use onload.
+        renderVisibleAdsWithoutEvent(visibleAdslots)
+        renderVisibleAdsOnScrollEvent(visibleAdslots)
+    }
+    else{
+        for(var adslot in visibleAdslots){
+            loadSingleAd(adslot)
+        }
+        gotAds = true;
+    }
 };
 
 function loadSingleAd(adslot){
@@ -776,61 +862,6 @@ function loadSingleAd(adslot){
         }(10, adslot, gotParent))
     }
 }
-
-function divVisible(adslot, onload){
-    var lazyLoadingOffset, lazyLoadingOffset = adSettings.lazyLoadingOffset || (lazyLoadingOffset = 0, lazyLoadingOffset);
-    console.log(lazyLoadingOffset)
-    try{
-        var elementPos = document.getElementById(adslot).offsetTop;
-    }
-    catch(err){
-        console.log("ad div", adslot, "not found on site")
-        return false
-    }
-
-    if(onload){
-        var windowPos = 0;
-    }
-    else{
-        var windowPos = document.body.scrollTop;
-    }
-
-    var windowBottom = window.innerHeight + windowPos;
-    if (windowBottom > (elementPos - lazyLoadingOffset)){
-        console.log(adslot, "windowBottom", windowBottom, "element:", elementPos, lazyLoadingOffset, (windowBottom - (elementPos - lazyLoadingOffset)));
-        return true
-    }
-
-    return false
-}
-
-
-function renderAds(visibleAdslots){
-    console.log(visibleAdslots);
-    if(adSettings.lazyLoading){
-        //check for adunits visible onload
-        window.onload = function(){
-            for(var adslot in visibleAdslots){
-                if(divVisible(adslot, true)){
-                    loadSingleAd(adslot)
-                }
-            }
-        }
-        window.onscroll = function() {
-            for(var adslot in visibleAdslots){
-                if(divVisible(adslot, false)){
-                    loadSingleAd(adslot)
-                }
-            }    
-        }
-    } 
-    else{
-        for(var adslot in visibleAdslots){
-            loadSingleAd(adslot)
-        }
-        gotAds = true;
-    }
-};
 
 function getSection(){
     var element = document.querySelector('meta[property="crsmediasection"]');
@@ -987,26 +1018,25 @@ function pbIx(size){
 
 function getDfpConsent(cmp){
     //vendor for Google = 3
+    var dfpConsent = false;
     if(!cmp){
         if(hasLegacyConsent()){
-            return true;
+            dfpConsent = true;
         }
     }
-
     else if(cmp=='faktor'){
-
         window.__cmp('addEventListener', 'cmpReady', function (){
             window.__cmp('getAdditionalVendorConsents', undefined, function(data) {
                 if (data.purposeConsents[1] && data.vendorConsents[3]) {
-                    return true;
+                    dfpConsent = true;
                 }
             });
         });
     }
-
     else if(cmp=='cookiebot'){
-        return true;
+        dfpConsent = true;
     }
+    return dfpConsent;
 }
 
 function getGoogleConsent(cmp){
@@ -1027,15 +1057,16 @@ function getGoogleConsent(cmp){
             consent = false;
             window.__cmp('getAdditionalVendorConsents', undefined, function(data) {
                 if (data.purposeConsents[1, 2] && data.vendorConsents[3]) {
-                    return true;
+                    consent = true;
                 }
             });
         }
-        if (cmp == 'cookiebot' && !Cookiebot.consent.marketing){
-            return false;
-        }
-        else if(cmp == 'cookiebot' && Cookiebot.consent.marketing){
-            return true;
+        if (cmp == 'cookiebot'){
+            consent = false;
+    
+            if(window.Cookiebot.consent.marketing){
+                consent = true;
+            }
         }
     }
     return consent;
@@ -1043,7 +1074,7 @@ function getGoogleConsent(cmp){
 
 function getPrebidConsent(cmp){
     if(cmp && cmp=='cookiebot'){
-        if(!window.Cookiebot.marketing){
+        if(!window.Cookiebot.consent.marketing){
             return false;
         }
         else{
@@ -1108,39 +1139,6 @@ function hasLegacyConsent(){
     }
     return false;
 }
-
-
-        </script>
-
-    </head>
-
-
-<script>
-    window.onload = function(){
-        console.log("loaded")
-        var windowPos = document.body.scrollTop;
-        var windowBottom = window.innerHeight + windowPos;
-        console.log(windowPos);
-        console.log(windowBottom);
-
-        var elementPos = document.getElementById('house_btf_rechts').offsetTop;
-        if (windowBottom < elementPos){
-            console.log("visible");
-        }
-
-    };
-    window.onscroll = function() {
-        console.log("scrolled")
-        var windowPos = document.body.scrollTop;
-        var windowBottom = window.innerHeight + windowPos;
-        var bannerOffset = 100;
-        //console.log(windowPos);
-        //console.log(windowBottom);
-        var elementPos = document.getElementById('house_btf_rechts').offsetTop;
-        if (windowBottom > (elementPos - bannerOffset)){
-            console.log("visible: ", windowBottom, elementPos);
-        }
-    };
 </script>
 
     <body>
@@ -1192,7 +1190,4 @@ function hasLegacyConsent(){
             </div>
         </div>
     </body>
-    <script>
-        pickAdFlow();
-    </script>
 </html>

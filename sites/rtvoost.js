@@ -39,6 +39,11 @@ adSettings = {
         "ix": {
             "active": false,
             "siteId": "255033"
+        },
+        "openx": {
+            "active": false,
+            "delDomain": "",
+            "unit": "",
         }
     },
     "adslots": {

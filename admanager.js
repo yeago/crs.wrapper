@@ -322,13 +322,14 @@ function defineAdslots(visibleAdslots, targeting){
                 setTargeting('urlcategory1', targeting.urlCategory1).
                 setTargeting('urlcategory2', targeting.urlCategory2).
                 setTargeting('urlpath', targeting.urlPath).
-                setTargeting('keywords', targeting.keyword).
-                addService(googletag.pubads());
-        }
+                setTargeting('keywords', targeting.keyword).addService(googletag.pubads());
+            }
         googletag.pubads().collapseEmptyDivs();
         googletag.pubads().enableSingleRequest();
         googletag.enableServices();
     })
+    
+    
 };
 
 function divInView(adslot, onload){
@@ -513,6 +514,7 @@ function getAdunits(visibleAdslots, section) {
             var sizes = checkArray(visibleAdslots[adslot])
             if(adSettings.hbSettings.rubicon.active){bids.push(pbRubicon())};
             if(adSettings.hbSettings.appnexus.active){bids.push(pbAppNexus());}
+            if(adSettings.hbSettings.openX.active){bids.push(pbOpenX());}
 
             for(var i = 0; i < sizes.length; i++){
                 if(adSettings.hbSettings.criteo.active){bids.push(pbCriteo(sizes[i]));}
@@ -559,6 +561,21 @@ function pbCriteo(size){
             bidder: 'criteo',
             params: {
                 zoneId: criteo.zoneIds[sizeString]
+            }
+        }
+    }
+    return bidder;
+}
+
+function pbOpenX(){
+    openX = adSettings.hbSettings.openX
+    var bidder = {}
+    if(openX.active){
+        bidder = {
+            bidder: 'openX',
+            params: {
+                delDomain: openX.delDomain,
+                unit: openX.unit
             }
         }
     }
@@ -651,15 +668,16 @@ function getGoogleConsent(cmp){
             consent = false;
             window.__cmp('getAdditionalVendorConsents', undefined, function(data) {
                 if (data.purposeConsents[1, 2] && data.vendorConsents[3]) {
-                    return true;
+                    consent = true;
                 }
             });
         }
-        if (cmp == 'cookiebot' && !window.Cookiebot.consent.marketing){
-            return false;
-        }
-        else if(cmp == 'cookiebot' && window.Cookiebot.consent.marketing){
-            return true;
+        if (cmp == 'cookiebot'){
+            consent = false;
+    
+            if(window.Cookiebot.consent.marketing){
+                consent = true;
+            }
         }
     }
     return consent;

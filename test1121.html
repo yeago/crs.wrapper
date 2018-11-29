@@ -1,12 +1,34 @@
+<html>
+    <head>
+        <meta property="crsmediasection" content="Overige">
+        <meta property="foobar" content="Overige">
+        <!--
+        <meta property="crsmedia-section" content="Home">
+        -->
+        <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="crossorigin="anonymous"></script>
+        <meta keywords="foo,bar">
+        <!--<script type='text/javascript' src='sites/test.js?v=6'></script>-->
+        <script>
+
+            var domReady = false;
+
+            //set legacy consent cookie for testing purposes
+            var date = new Date();
+            date.setTime(date.getTime() + (365*24*60*60*1000));
+            expires = "; expires=" + date.toUTCString();
+            document.cookie = "cookie-agreed=2" + expires + "; path=/";
+        </script>
+
+        <script>
 console.log("You are at the test site, pointing to the internal DFP account");
 
 adSettings = {
     //"dfpNetworkcode": 12779449,
     "dfpNetworkcode": 21722727094,
     "siteName": "rtvoost",
-    "lazyLoading": false,
-    "lazyLoadingOffset": 100,
     "expectedCmp": "faktor",
+    "lazyLoading": true,
+    "lazyLoadingOffset": 100,
     "prebid": true,
     "PREBID_TIMEOUT": 1400,
     "hbSettings": {
@@ -40,11 +62,6 @@ adSettings = {
         "ix": {
             "active": true,
             "siteId": "255033"
-        },
-        "openx": {
-            "active": false,
-            "delDomain": "",
-            "unit": "",
         }
     },
     "adslots": {
@@ -400,73 +417,86 @@ setGoogleTag();
 pickAdFlow();
 
 function pickAdFlow(){
-    if(hasCmp()){
-        initCmpAds()
+    var cmp = hasCmp()
+    if(cmp){
+        initCmpAds(cmp)
     }
     else{
-        if(hasLegacyConsent()){
-            loadAds();
+        if(hasLegacyConsent() || !hasLegacyConsent()){
+            loadAds(cmp);
         }
     }
-};
+ };
 
-function initCmpAds(){
-    window.__cmp('addEventListener', 'cmpReady', function (){
-        if(getDfpConsent()){
-            loadAds()
-        }
-        else{
-            loadAdsOnConsentEvent();
-        }
-    });
+function initCmpAds(cmp){
+    if (cmp=='faktor'){
+        window.__cmp('addEventListener', 'cmpReady', function (){
+            if(getDfpConsent(cmp)){
+                loadAds(cmp)
+            }
+            else{
+                loadAdsOnConsentEvent(cmp);
+            }
+        })
+    };
+    if(cmp=='cookiebot'){
+        window.addEventListener('CookiebotOnLoad', function () {
+            loadAds(cmp)
+        }, false);
+    }
 }
 
-function loadAds(){
+function loadAds(cmp){
     loadDfp(function() {
         loadPrebidJs(function(){
             var visibleAdslots = getAdslots();
-            loadPrebid(visibleAdslots, section);
-            defineAdslots(visibleAdslots, targeting);
+            loadPrebid(visibleAdslots, section, cmp);
+            defineAdslots(visibleAdslots, targeting, cmp);
             renderAds(visibleAdslots);
         })
     })
+};
+
+function loadAdserverOnConsentEvent(cmp){
+    var useSSL = 'https:' == document.location.protocol;
+    var dfpUrl = (useSSL ? 'https:' : 'http:') + '//www.googletagservices.com/tag/js/gpt.js';
+    var prebidUrl = (useSSL ? 'https:' : 'http:') + '//crs-media-cdn.nl/prebid.js';
+    jQuery.getScript(dfpUrl, function (){
+        jQuery.getScript(prebidUrl);
+        var visibleAdslots = getAdslots();
+        loadPrebid(visibleAdslots, section, cmp);
+        defineAdslots(visibleAdslots, targeting, cmp);
+        renderAds(visibleAdslots);
+    });
 }
 
-function loadAdsOnConsentEvent(){ 
+function loadAdsOnConsentEvent(cmp){
+    //faktor only: cookiebot is loads nonPersonalized
     if(!gotAds){
-        window.__cmp('addEventListener', 'consentChanged', function () {
-            if(getDfpConsent()){
-                var useSSL = 'https:' == document.location.protocol;
-                var dfpUrl = (useSSL ? 'https:' : 'http:') + '//www.googletagservices.com/tag/js/gpt.js';
-                var prebidUrl = (useSSL ? 'https:' : 'http:') + '//crs-media-cdn.nl/prebid.js';
-                jQuery.getScript(dfpUrl, function (){
-                    jQuery.getScript(prebidUrl);
-                    var visibleAdslots = getAdslots();
-                    loadPrebid(visibleAdslots, section);
-                    defineAdslots(visibleAdslots, targeting);
-                    renderAds(visibleAdslots);
-                });
-            }
-            else{
-            }
-        });
+        if(cmp&&cmp=='faktor'){
+            window.__cmp('addEventListener', 'consentChanged', function () {
+                if(getDfpConsent(cmp)){
+                    loadAdserverOnConsentEvent(cmp)
+                }
+            });
+        }
     }
 };
 
-function setGoogleTag(){
+function setGoogleTag(cmp){
     googletag.cmd.push(function() {
     googletag.pubads().disableInitialLoad();
     });
-    if(!getGoogleConsent())
+    if(!getGoogleConsent(cmp))
     {
         googletag.cmd.push(function() {
             googletag.pubads().disableInitialLoad()
             googletag.pubads().setRequestNonPersonalizedAds(1)
         });
     }
-}
+};
 
-function getPbjsConfig(){
+function getPbjsConfig(cmp){
     var customPrice = {
         'buckets': [
             {
@@ -515,28 +545,37 @@ function getPbjsConfig(){
             }
         }
     }
-    //ask CMP if pubcid is allowed
-    var allowPubcid = true;
-    var adNetworks = [32, 91, 52, 10];
-    for (var i=0; i < adNetworks.length; i++){
-        if(!getIabVendorConsent(adNetworks[i], [1,2])){
-            allowPubcid = false;
+
+    if (cmp && cmp=='faktor'){
+        //ask CMP if pubcid is allowed
+        var allowPubcid = true;
+        var adNetworks = [32, 91, 52, 10];
+        for (var i=0; i < adNetworks.length; i++){
+            if(!getIabVendorConsent(adNetworks[i], [1,2])){
+                allowPubcid = false;
+            }
+        }
+        if (allowPubcid){
+           pbjsConfig.pubcid.enable = true
         }
     }
-    if (allowPubcid){
-       pbjsConfig.pubcid.enable = true
+
+    if (getPrebidConsent(cmp)){
+        pbjsConfig.pubcid.enable = true
+        pbjsConfig.consentManagement.allowAuctionWithoutConsent = true;
     }
+
 
     if(!hasCmp() && hasLegacyConsent()){
         pbjsConfig.consentManagement.allowAuctionWithoutConsent = true;
     }
     return pbjsConfig
-}
+};
 
-function loadPrebid(visibleAdslots, section){
-    if(adSettings.prebid){
+function loadPrebid(visibleAdslots, section, cmp){
+    if(adSettings.prebid && getPrebidConsent(cmp)){
         var adUnits = getAdunits(visibleAdslots, section);
-        var pbjsConfig = getPbjsConfig();
+        var pbjsConfig = getPbjsConfig(cmp);
         
         pbjs.que.push(function() {
             pbjs.setConfig(pbjsConfig);
@@ -565,7 +604,6 @@ function loadPrebid(visibleAdslots, section){
             googletag.cmd.push(function() {
                 googletag.pubads().refresh();
             });
-
         }
     }
 
@@ -575,7 +613,7 @@ function loadPrebid(visibleAdslots, section){
     setTimeout(function() {
         initAdserver();
     }, PREBID_TIMEOUT);
-}
+};
 
 function getAdslots() {
     var sectionAdslots = adSettings.adslots[getSection()]
@@ -589,21 +627,25 @@ function getAdslots() {
             minwidth = viewport.minwidth;
             maxwidth = viewport.maxwidth;
             if (!maxwidth && minwidth && minwidth <= windowWidth){
+                visibleAdslots[adslot] = {}
                 visibleAdslots[adslot] = viewport.sizes;
             }
             else if (maxwidth && !minwidth && maxwidth >= windowWidth){
+                visibleAdslots[adslot] = {}
                 visibleAdslots[adslot] = viewport.sizes;
             }
             else if (maxwidth && minwidth && maxwidth >= windowWidth && minwidth < windowWidth){
+                visibleAdslots[adslot] = {}
                 visibleAdslots[adslot] = viewport.sizes;
             }
             else if (!maxwidth && !minwidth){
+                visibleAdslots[adslot] = {}
                 visibleAdslots[adslot] = viewport.sizes;
             }
         }
     }
     return visibleAdslots
-}
+};
 
 function getTargeting(section){
     var custom = {};
@@ -652,7 +694,7 @@ function getTargeting(section){
   }
 
   return custom
-}
+};
 
 function loadDfp(callback){
     var gads = document.createElement('script');
@@ -663,7 +705,7 @@ function loadDfp(callback){
     var node = document.getElementsByTagName('script')[0]; 
     node.parentNode.insertBefore(gads, node);
     callback();
-}
+};
 
 function loadPrebidJs(callback){
     var prebid = document.createElement('script');   
@@ -674,15 +716,9 @@ function loadPrebidJs(callback){
     var node = document.getElementsByTagName('script')[0]; 
     node.parentNode.insertBefore(prebid, node);
     callback();
-}
+};
 
-function defineAdslots(visibleAdslots, targeting){
-    //build allowed array of networks in case of waterfall
-    var disallowedNetworks = [];
-    if(getIabVendorConsent(52, [2,3,4,5])){
-        disallowedNetworks.push('rubicon');
-    }
-
+function defineAdslots(visibleAdslots, targeting, cmp){
     googletag.cmd.push(function() {
         for (adslot in visibleAdslots){
             var dfpAdslot = '/' + adSettings.dfpNetworkcode + '/' + adSettings.siteName + '-' + adslot;
@@ -694,17 +730,22 @@ function defineAdslots(visibleAdslots, targeting){
                 setTargeting('urlcategory2', targeting.urlCategory2).
                 setTargeting('urlpath', targeting.urlPath).
                 setTargeting('keywords', targeting.keyword).
-                setTargeting('disallow_networks', disallowedNetworks).
                 addService(googletag.pubads());
-            googletag.pubads().collapseEmptyDivs();
-            googletag.pubads().enableSingleRequest();
-            googletag.enableServices();
         }
+        googletag.pubads().collapseEmptyDivs();
+        googletag.pubads().enableSingleRequest();
+        googletag.enableServices();
     })
-}
+};
 
-function renderAds(visibleAdslots){
-    for(var adslot in visibleAdslots){
+function loadSingleAd(adslot){
+    var exists = false;
+    try{
+        exists = document.getElementById('ad-' + adslot).parentNode;
+    }
+    catch(err){}
+
+    if(!exists){
         var adslotCompleted = false;
         var gotParent = false;
 
@@ -734,8 +775,62 @@ function renderAds(visibleAdslots){
             }
         }(10, adslot, gotParent))
     }
-    gotAds = true;
 }
+
+function divVisible(adslot, onload){
+    var lazyLoadingOffset, lazyLoadingOffset = adSettings.lazyLoadingOffset || (lazyLoadingOffset = 0, lazyLoadingOffset);
+    console.log(lazyLoadingOffset)
+    try{
+        var elementPos = document.getElementById(adslot).offsetTop;
+    }
+    catch(err){
+        console.log("ad div", adslot, "not found on site")
+        return false
+    }
+
+    if(onload){
+        var windowPos = 0;
+    }
+    else{
+        var windowPos = document.body.scrollTop;
+    }
+
+    var windowBottom = window.innerHeight + windowPos;
+    if (windowBottom > (elementPos - lazyLoadingOffset)){
+        console.log(adslot, "windowBottom", windowBottom, "element:", elementPos, lazyLoadingOffset, (windowBottom - (elementPos - lazyLoadingOffset)));
+        return true
+    }
+
+    return false
+}
+
+
+function renderAds(visibleAdslots){
+    console.log(visibleAdslots);
+    if(adSettings.lazyLoading){
+        //check for adunits visible onload
+        window.onload = function(){
+            for(var adslot in visibleAdslots){
+                if(divVisible(adslot, true)){
+                    loadSingleAd(adslot)
+                }
+            }
+        }
+        window.onscroll = function() {
+            for(var adslot in visibleAdslots){
+                if(divVisible(adslot, false)){
+                    loadSingleAd(adslot)
+                }
+            }    
+        }
+    } 
+    else{
+        for(var adslot in visibleAdslots){
+            loadSingleAd(adslot)
+        }
+        gotAds = true;
+    }
+};
 
 function getSection(){
     var element = document.querySelector('meta[property="crsmediasection"]');
@@ -758,7 +853,7 @@ function getSection(){
     }
 
     return sectionName
-}
+};
 
 function cleanChars(string, slash){
     try{
@@ -890,32 +985,35 @@ function pbIx(size){
     return bidder;
 }
 
-function getDfpConsent(){
+function getDfpConsent(cmp){
     //vendor for Google = 3
-    var consent = false;
-    if(!hasCmp()){
+    if(!cmp){
         if(hasLegacyConsent()){
-            consent = true;
+            return true;
         }
     }
 
-    else{
+    else if(cmp=='faktor'){
+
         window.__cmp('addEventListener', 'cmpReady', function (){
             window.__cmp('getAdditionalVendorConsents', undefined, function(data) {
                 if (data.purposeConsents[1] && data.vendorConsents[3]) {
-                    consent = true;
+                    return true;
                 }
             });
         });
     }
-    return consent;
+
+    else if(cmp=='cookiebot'){
+        return true;
+    }
 }
 
-
-function getGoogleConsent(){
+function getGoogleConsent(cmp){
+    //check CMP if okay to load personalize Admanager ads
     //vendor for Google = 3
     var consent = true;
-    if(!hasCmp()){
+    if(!cmp){
         if(hasLegacyConsent()){
             return true;
         }
@@ -925,23 +1023,49 @@ function getGoogleConsent(){
     }
 
     else{
-        consent = false;
-        window.__cmp('getAdditionalVendorConsents', undefined, function(data) {
-            if (data.purposeConsents[1, 2] && data.vendorConsents[3]) {
-                consent = true;
-            }
-        });
+        if (cmp == 'faktor'){
+            consent = false;
+            window.__cmp('getAdditionalVendorConsents', undefined, function(data) {
+                if (data.purposeConsents[1, 2] && data.vendorConsents[3]) {
+                    return true;
+                }
+            });
+        }
+        if (cmp == 'cookiebot' && !Cookiebot.consent.marketing){
+            return false;
+        }
+        else if(cmp == 'cookiebot' && Cookiebot.consent.marketing){
+            return true;
+        }
     }
     return consent;
 }
 
-//function also used by publishers directly! ensure backward compatibilty
-function hasCmp(){
-    if(typeof window.__cmp == "undefined"){
-        return false
+function getPrebidConsent(cmp){
+    if(cmp && cmp=='cookiebot'){
+        if(!window.Cookiebot.marketing){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
     else{
         return true
+    }
+}
+
+
+//function also used by publishers directly! ensure backward compatibilty
+function hasCmp(){
+    if(typeof window.__cmp != "undefined"){
+        return 'faktor'
+    }
+    else if (typeof window.Cookiebot != "undefined"){
+        return 'cookiebot'
+    }
+    else{
+        return false
     }
 }
 
@@ -986,14 +1110,89 @@ function hasLegacyConsent(){
 }
 
 
+        </script>
 
-!function () {
-    var adManager = document.createElement('script');   
-    adManager.async = true; 
-    adManager.type = 'text/javascript'; 
-    var useSSL = 'https:' == document.location.protocol;
-    //adManager.src = 'admanager.js?v=3';
-    //adManager.src = (useSSL ? 'https:' : 'http:') + '//crs-media-cdn.nl/admanager.min.js';
-    //var node = document.getElementsByTagName('script')[0]; 
-    //node.parentNode.insertBefore(adManager, node);
-}()
+    </head>
+
+
+<script>
+    window.onload = function(){
+        console.log("loaded")
+        var windowPos = document.body.scrollTop;
+        var windowBottom = window.innerHeight + windowPos;
+        console.log(windowPos);
+        console.log(windowBottom);
+
+        var elementPos = document.getElementById('house_btf_rechts').offsetTop;
+        if (windowBottom < elementPos){
+            console.log("visible");
+        }
+
+    };
+    window.onscroll = function() {
+        console.log("scrolled")
+        var windowPos = document.body.scrollTop;
+        var windowBottom = window.innerHeight + windowPos;
+        var bannerOffset = 100;
+        //console.log(windowPos);
+        //console.log(windowBottom);
+        var elementPos = document.getElementById('house_btf_rechts').offsetTop;
+        if (windowBottom > (elementPos - bannerOffset)){
+            console.log("visible: ", windowBottom, elementPos);
+        }
+    };
+</script>
+
+    <body>
+        <div style="height:90px">
+            leaderboard (320x50 < 600 < 728x90)
+            <div id="leaderboard">
+            </div>
+        </div>
+
+        <div style="height:300px">
+            rectangleBTF (320x50 < 600 < 300x250)
+            <div id="rectangleBTF">
+            </div>
+        </div>
+
+        <div style="height:300px">
+            rectangleATF (320x50 < 600 < 300x250)
+            <div id="rectangleATF">
+            </div>
+        </div>
+
+        <div style="height:250px">
+            Ligatus_636 (width > 0)
+            <div id="Ligatus_636">
+            </div>
+        </div>
+
+        <div style="height:170px">
+            house_atf_top (width > 0)
+            <div id="house_atf_top">
+            </div>
+        </div>
+
+        <div style="height:170px">
+            house_btf_link (width > 0)
+            <div id="house_btf_link">
+            </div>
+        </div>
+        
+        <div style="height:170px">
+            house_btf_midden (width > 0)
+            <div id="house_btf_midden">
+            </div>
+        </div>
+
+        <div style="height:170px">
+            house_btf_rechts (width > 0)
+            <div id="house_btf_rechts">
+            </div>
+        </div>
+    </body>
+    <script>
+        pickAdFlow();
+    </script>
+</html>
