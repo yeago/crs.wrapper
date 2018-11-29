@@ -244,7 +244,7 @@ adSettings = {
                     "sizes": [[760, 580]]
                 }]
             }
-        },  
+        },
         "5": {
              "lay2lead1": {
                 "viewports" : [{
