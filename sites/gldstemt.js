@@ -1,6 +1,6 @@
 adSettings = {
-    "dfpNetworkcode": "38496904",
-    "siteName": "gldstemt",
+    "dfpNetworkcode": 38496904,
+    "siteName": "GLDstemt",
     "expectedCmp": "cookiebot_notlive",
     "lazyLoading": false,
     "lazyLoadingOffset": 10,
@@ -44,76 +44,90 @@ adSettings = {
             "unit": "540492885"
         }
     },
+
     "adslots": {
         "Home": {
-            "bannerATF": {
+            "headerbanner": {
                 "viewports": [{
-                    "minwidth": 1040,
+                    "minwidth": 768,
                     "sizes": [320, 50]
                 }]
             },
-            "bannerATF_mobile": {
+            "content1": {
                 "viewports": [{
-                    "minwidth": 0,
-                    "maxwidth": 1023,
-                    "sizes": [320, 50]
-                }]
-            },
-            "rectangleATF": {
-                "viewports": [{
-                    "maxwidth": 768,
-                    "sizes": [[300, 250], [320, 240]]
-                },
-                {
                     "minwidth": 768,
                     "sizes": [300, 250]
                 }]
             },
-            "bannerBTF": {
-                "viewports": [
-                {
+            "content2": {
+                "viewports": [{
                     "minwidth": 768,
+                    "sizes": [[728, 90]]
+                }]
+            },
+            "sidebar1": {
+                "viewports": [{
+                    "minwidth": 768,
+                    "sizes": [300, 250]
+                }]
+            },
+            "tablet-headerbanner": {
+                "viewports": [{
+                    "minwidth": 920,
+                    "maxwidth": 1200,
+                    "sizes": [320, 50]
+                }]
+            },
+            "tablet-content1": {
+                "viewports": [{
+                    "minwidth": 920,
+                    "maxwidth": 1200,
+                    "sizes": [300, 250]
+                }]
+            },
+            "tablet-content2": {
+                "viewports": [{
+                    "minwidth": 920,
+                    "maxwidth": 1200,
                     "sizes": [728, 90]
                 }]
-            }
-        },
-        "ArticleList": {
-            "bannerATF": {
-                "viewports": [{
-                    "minwidth": 1040,
-                    "sizes": [320, 50]
-                }]
             },
-            "bannerATF_mobile": {
+            "tablet-article-sidebar1": {
                 "viewports": [{
-                    "minwidth": 0,
-                    "maxwidth": 1023,
-                    "sizes": [320, 50]
-                }]
-            }
-        },
-        "Article": {
-            "rectangleATF": {
-                "viewports": [{
-                    "maxwidth": 768,
-                    "sizes": [[300, 250], [320, 240]]
-                },
-                {
-                    "minwidth": 768,
+                    "minwidth": 920,
+                    "maxwidth": 1200,
                     "sizes": [300, 250]
                 }]
             },
-            "bannerATF": {
+            "tablet-underarticle": {
                 "viewports": [{
-                    "minwidth": 1040,
+                    "minwidth": 768,
+                    "maxwidth": 991, 
+                    "sizes": [728, 90]
+                }]
+            },
+            "phone-content1": {
+                "viewports": [{
+                    "maxwidth": 768,
                     "sizes": [320, 50]
                 }]
             },
-            "bannerATF_mobile": {
+            "phone-content2": {
                 "viewports": [{
-                    "minwidth": 0,
-                    "maxwidth": 1023,
+                    "maxwidth": 768,
+                    "sizes": [300, 250]
+                }]
+            },
+            "phone-article1": {
+                "viewports": [{
+                    "maxwidth": 768,
                     "sizes": [320, 50]
+                }]
+            },
+            "phone-article2": {
+                "viewports": [{
+                    "maxwidth": 768,
+                    "sizes": [300, 250]
                 }]
             }
         }
