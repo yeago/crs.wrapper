@@ -1,6 +1,17 @@
 # ads.txt for CRS-media-cdn.nl
 
+# CRS accounts
 indexexchange.com, 186813, DIRECT
-rubiconproject.com, 12042, DIRECT, 0bfd66d529a55807
+rubiconproject.com, 18908, DIRECT, 0bfd66d529a55807
 google.com, pub-7135093461395923, DIRECT, f08c47fec0942fa0
 appnexus.com, 329, RESELLER, f5ab79cb980f11d1
+improvedigital.com, 1160, DIRECT
+openx.com, 540492835, DIRECT, 6a698e2ec38604c6
+
+# DQ&A AdEx
+google.com, pub-6285465845019326, RESELLER, f08c47fec0942fa0
+
+# branddeli
+google.com, pub-2678732374147763, DIRECT, f08c47fec0942fa0
+spotxchange.com, 140330, DIRECT, 7842df1d2fe2db34
+spotx.tv, 140330, DIRECT, 7842df1d2fe2db34

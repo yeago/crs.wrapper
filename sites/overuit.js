@@ -38,14 +38,14 @@ adSettings = {
             "active": false,
             "siteId": "255033"
         },
-        "openx": {
-            "active": false,
+        "openX": {
+            "active": true,
             "delDomain": "orn-d.openx.net",
-            "unit": "540492884",
+            "unit": "540492884"
         }
     },
     "adslots": {
-        "homepage": {
+        "1037": {
             "rectangle": {
                 "viewports" : [{
                     "minwidth": 0,
@@ -65,7 +65,7 @@ adSettings = {
                     }]
             },
         },
-        "listview": {
+        "1038": {
             "leaderboard": {
                 "viewports" : [{
                     "minwidth": 0,
@@ -87,7 +87,7 @@ adSettings = {
     adManager.async = true; 
     adManager.type = 'text/javascript'; 
     var useSSL = 'https:' == document.location.protocol;
-    adManager.src = (useSSL ? 'https:' : 'http:') + 'crs-media-cdn.nl/admanager.min.js';
+    adManager.src = (useSSL ? 'https:' : 'http:') + '//crs-media-cdn.nl/admanager.min.js';
     var node = document.getElementsByTagName('script')[0]; 
     node.parentNode.insertBefore(adManager, node);
 }()

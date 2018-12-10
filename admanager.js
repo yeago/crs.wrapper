@@ -569,7 +569,7 @@ function pbOpenX(){
     var bidder = {}
     if(openX.active){
         bidder = {
-            bidder: 'openX',
+            bidder: 'openx',
             params: {
                 delDomain: openX.delDomain,
                 unit: openX.unit

@@ -38,10 +38,10 @@ adSettings = {
             "active": false,
             "siteId": "255033"
         },
-        "openx": {
+        "openX": {
             "active": false,
             "delDomain": "orn-d.openx.net",
-            "unit": "540492877",
+            "unit": "540492877"
         }
     },
     "adslots": {

@@ -2,7 +2,7 @@ adSettings = {
     "dfpNetworkcode": 21628810801,
     "siteName": "omroepflevoland",
     "expectedCmp": "faktor",
-    "lazyLoading": true,
+    "lazyLoading": false,
     "lazyLoadingOffset": 10,
     "prebid": true,
     "PREBID_TIMEOUT": 1400,
@@ -230,6 +230,12 @@ adSettings = {
                 {
                     "minwidth": 700,
                     "sizes": [[300, 250]]
+                }]
+            },
+            "special1": {
+                "viewports" : [{
+                    "minwidth": 700,
+                    "sizes": [[760, 300]]
                 }]
             },
             "special2": {
