@@ -1,7 +1,7 @@
 adSettings = {
     "dfpNetworkcode": 38496904,
     "siteName": "omroepgelderland",
-    "expectedCmp": "cookiebot_notlive",
+    "expectedCmp": "cookiebot",
     "lazyLoading": false,
     "lazyLoadingOffset": 10,
     "prebid": true,
