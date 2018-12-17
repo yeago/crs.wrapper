@@ -697,11 +697,11 @@ function getPrebidConsent(cmp){
 
 //function also used by publishers directly! ensure backward compatibilty
 function hasCmp(){
-    if(typeof window.__cmp != "undefined"){
-        return 'faktor'
-    }
-    else if (typeof window.Cookiebot != "undefined"){
+    if (typeof window.Cookiebot != "undefined"){
         return 'cookiebot'
+    }
+    else if(typeof window.__cmp != "undefined"){
+        return 'faktor'
     }
     else{
         return false
