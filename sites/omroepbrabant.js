@@ -48,7 +48,7 @@ adSettings = {
         "Home": {
             "defaultcontent1": {
                 "viewports": [{
-                    "maxwidth": 768,
+                    "maxwidth": 767,
                     "sizes": [320, 50]
                 }]
             },
@@ -60,7 +60,7 @@ adSettings = {
             },
             "defaultcontent3": {
                 "viewports": [{
-                    "minwidth": 768,
+                    "minwidth": 767,
                     "sizes": [728, 90]
                 }]
             },
@@ -93,7 +93,7 @@ adSettings = {
         "Container": {
             "defaultcontent1": {
                 "viewports": [{
-                    "minwidth": 768,
+                    "minwidth": 767,
                     "sizes": [728, 90]
                 }]
             },
@@ -159,7 +159,7 @@ adSettings = {
         "RadioTvArchive": {
             "defaultcontent1": {
                 "viewports": [{
-                    "minwidth": 768,
+                    "minwidth": 767,
                     "sizes": [728, 90]
                 }]
             },
@@ -198,7 +198,7 @@ adSettings = {
         "RadioTvEpisode": {
             "defaultcontent1": {
                 "viewports": [{
-                    "minwidth": 768,
+                    "minwidth": 767,
                     "sizes": [300, 250]
                 }]
             },
@@ -231,7 +231,7 @@ adSettings = {
         "RadioTvGuide": {
             "defaultcontent1": {
                 "viewports": [{
-                    "minwidth": 768,
+                    "minwidth": 767,
                     "sizes": [728, 90]
                 }]
             },
@@ -270,7 +270,7 @@ adSettings = {
         "RadioTvPortal": {
             "defaultcontent1": {
                 "viewports": [{
-                    "minwidth": 768,
+                    "minwidth": 767,
                     "sizes": [728, 90]
                 }]
             },
@@ -303,7 +303,7 @@ adSettings = {
         "TaggedTagPage": {
             "defaultcontent1": {
                 "viewports": [{
-                    "minwidth": 768,
+                    "minwidth": 767,
                     "sizes": [728, 90]
                 }]
             },
@@ -336,7 +336,7 @@ adSettings = {
         "TaggedTheme": {
             "defaultcontent1": {
                 "viewports": [{
-                    "minwidth": 768,
+                    "minwidth": 767,
                     "sizes": [728, 90]
                 }]
             },
@@ -369,7 +369,7 @@ adSettings = {
         "TaggedThemes": {
             "defaultcontent1": {
                 "viewports": [{
-                    "minwidth": 768,
+                    "minwidth": 767,
                     "sizes": [728, 90]
                 }]
             },
