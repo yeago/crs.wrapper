@@ -2,7 +2,7 @@ adSettings = {
     "dfpNetworkcode": 21628810801,
     "siteName": "omroepflevoland",
     "expectedCmp": "faktor",
-    "lazyLoading": true,
+    "lazyLoading": false,
     "lazyLoadingOffset": 10,
     "prebid": true,
     "PREBID_TIMEOUT": 1400,
@@ -46,338 +46,230 @@ adSettings = {
         }
     },
     "adslots": {
-        "1": {
-            "homelead1": {
+        "Home": {
+            "desktop-homelead1": {
                 "viewports" : [{
-                    "maxwidth": 700,
+                    "maxwidth": 768,
                     "sizes": [[320, 50]]
                 },
                 {
-                    "minwidth": 700,
+                    "minwidth": 768,
                     "sizes": [[728, 90]]
                 }]
             },
-            "homerect1": {
+            "desktop-homelead2": {
+                "viewports" : [{
+                    "maxwidth": 768,
+                    "sizes": [[320, 50]]
+                },
+                {
+                    "minwidth": 768,
+                    "sizes": [[728, 90]]
+                }]
+            },
+            "desktop-homelead3": {
+                "viewports" : [{
+                    "maxwidth": 768,
+                    "sizes": [[320, 50]]
+                },
+                {
+                    "minwidth": 768,
+                    "sizes": [[728, 90]]
+                }]
+            },
+            "desktop-homerect1": {
                 "viewports" : [{
                     "minwidth": 0,
                     "sizes": [[300, 250], [320, 240]]
                 }]
             },
-            "homelead2": {
-                "viewports" : [{
-                    "maxwidth": 700,
-                    "sizes": [[320, 50]]
-                },
-                {
-                    "minwidth": 700,
-                    "sizes": [[728, 90]]
-                }]
-            },
-            "homelead3": {
-                "viewports" : [{
-                    "maxwidth": 700,
-                    "sizes": [[320, 50]]
-                },
-                {
-                    "minwidth": 700,
-                    "sizes": [[728, 90]]
-                }]
-            },
-            "homerect2": {
+            "desktop-homerect2": {
                 "viewports" : [{
                     "minwidth": 0,
                     "sizes": [[300, 250], [320, 240]]
                 }]
             },
-            "homerect3": {
+            "desktop-homerect3": {
                 "viewports" : [{
                     "minwidth": 0,
                     "sizes": [[300, 250], [320, 240]]
                 }]
-            }                               
-        },
-        "2": {
-             "lay2lead1": {
+            },
+            "mobilesite-homelead1": {
+                "viewports" : [{
+                    "maxwidth": 768,
+                    "sizes": [[320, 50]]
+                },
+                {
+                    "minwidth": 768,
+                    "sizes": [[728, 90]]
+                }]
+            },
+            "mobilesite-homelead2": {
+                "viewports" : [{
+                    "maxwidth": 768,
+                    "sizes": [[320, 50]]
+                },
+                {
+                    "minwidth": 768,
+                    "sizes": [[728, 90]]
+                }]
+            },
+            "app-homelead1": {
+                "viewports" : [{
+                    "maxwidth": 768,
+                    "sizes": [[320, 50]]
+                },
+                {
+                    "minwidth": 768,
+                    "sizes": [[728, 90]]
+                }]
+            },
+            "app-homelead2": {
+                "viewports" : [{
+                    "maxwidth": 768,
+                    "sizes": [[320, 50]]
+                },
+                {
+                    "minwidth": 768,
+                    "sizes": [[728, 90]]
+                }]
+            },
+            "app-homelead3": {
+                "viewports" : [{
+                    "maxwidth": 768,
+                    "sizes": [[320, 50]]
+                },
+                {
+                    "minwidth": 768,
+                    "sizes": [[728, 90]]
+                }]
+            },
+            "app-homerect1": {
                 "viewports" : [{
                     "minwidth": 0,
-                    "maxwidth": 700,
-                    "sizes": [[320, 50]]
-                },
-                {
-                    "minwidth": 700,
-                    "sizes": [[728, 90]]
+                    "sizes": [[300, 250], [320, 240]]
                 }]
             },
-            "lay2lead2": {
+            "app-homerect2": {
                 "viewports" : [{
-                    "maxwidth": 700,
-                    "sizes": [[320, 50]]
-                },
-                {
-                    "minwidth": 700,
-                    "sizes": [[728, 90]]
+                    "minwidth": 0,
+                    "sizes": [[300, 250], [320, 240]]
                 }]
             },
-            "lay2lead3": {
+            "app-homerect3": {
                 "viewports" : [{
-                    "maxwidth": 700,
-                    "sizes": [[320, 50]]
-                },
-                {
-                    "minwidth": 700,
-                    "sizes": [[728, 90]]
+                    "minwidth": 0,
+                    "sizes": [[300, 250], [320, 240]]
                 }]
-            },
-            "lay2rect1": {
-                "viewports" : [{
-                    "maxwidth": 700,
-                    "sizes": [[320, 50]]
-                },
-                {
-                    "minwidth": 700,
-                    "sizes": [[300, 250]]
-                }]
-            },
-            "lay2rect2": {
-                "viewports" : [{
-                    "maxwidth": 700,
-                    "sizes": [[320, 50]]
-                },
-                {
-                    "minwidth": 700,
-                    "sizes": [[300, 250]]
-                }]
-            },
+            }                             
         },
-        "3": {
-             "lay2lead1": {
+        "Overview": {
+            "desktop-overviewrect1": {
                 "viewports" : [{
-                    "maxwidth": 700,
-                    "sizes": [[320, 50]]
-                },
-                {
-                    "minwidth": 700,
-                    "sizes": [[728, 90]]
+                    "minwidth": 0,
+                    "sizes": [[300, 250], [320, 240]]
                 }]
             },
-            "lay2lead2": {
+            "desktop-overviewrect2": {
                 "viewports" : [{
-                    "maxwidth": 700,
-                    "sizes": [[320, 50]]
-                },
-                {
-                    "minwidth": 700,
-                    "sizes": [[728, 90]]
+                    "minwidth": 0,
+                    "sizes": [[300, 250], [320, 240]]
                 }]
             },
-            "lay2lead3": {
+            "app-overviewrect1": {
                 "viewports" : [{
-                    "maxwidth": 700,
-                    "sizes": [[320, 50]]
-                },
-                {
-                    "minwidth": 700,
-                    "sizes": [[728, 90]]
+                    "minwidth": 0,
+                    "sizes": [[300, 250], [320, 240]]
                 }]
             },
-            "lay2rect1": {
+            "app-overviewrect2": {
                 "viewports" : [{
-                    "maxwidth": 700,
-                    "sizes": [[320, 50]]
-                },
-                {
-                    "minwidth": 700,
-                    "sizes": [[300, 250]]
-                }]
-            },
-            "lay2rect2": {
-                "viewports" : [{
-                    "maxwidth": 700,
-                    "sizes": [[320, 50]]
-                },
-                {
-                    "minwidth": 700,
-                    "sizes": [[300, 250]]
+                    "minwidth": 0,
+                    "sizes": [[300, 250], [320, 240]]
                 }]
             }
         },
-        "4": {
-            "lay2lead1": {
+        "Detail": {
+             "desktop-detaillead1": {
                 "viewports" : [{
-                    "maxwidth": 700,
+                    "maxwidth": 768,
                     "sizes": [[300, 250], [320, 240]]
                 },
                 {
-                    "minwidth": 700,
+                    "minwidth": 768,
                     "sizes": [[728, 90]]
                 }]
             },
-            "lay2lead2": {
+            "desktop-detaillead2": {
                 "viewports" : [{
-                    "maxwidth": 700,
-                    "sizes": [[320, 50]]
+                    "maxwidth": 768,
+                    "sizes": [[300, 250], [320, 240]]
                 },
                 {
-                    "minwidth": 700,
+                    "minwidth": 768,
                     "sizes": [[728, 90]]
                 }]
             },
-            "lay3rect1": {
+            "desktop-detailrect1": {
                 "viewports" : [{
-                    "maxwidth": 700,
-                    "sizes": [[320, 50]]
-                },
-                {
-                    "minwidth": 700,
-                    "sizes": [[300, 250]]
+                    "minwidth": 0,
+                    "sizes": [[300, 250], [320, 240]]
                 }]
             },
-            "special2": {
+            "mobilesite-detaillead1": {
                 "viewports" : [{
-                    "minwidth": 700,
-                    "sizes": [[760, 580]]
+                    "maxwidth": 768,
+                    "sizes": [[300, 250], [320, 240]]
+                },
+                {
+                    "minwidth": 768,
+                    "sizes": [[728, 90]]
+                }]
+            },
+            "mobilesite-detaillead2": {
+                "viewports" : [{
+                    "maxwidth": 768,
+                    "sizes": [[300, 250], [320, 240]]
+                },
+                {
+                    "minwidth": 768,
+                    "sizes": [[728, 90]]
+                }]
+            },
+            "mobilesite-detailrect1": {
+                "viewports" : [{
+                    "minwidth": 0,
+                    "sizes": [[300, 250], [320, 240]]
+                }]
+            },
+            "app-detaillead1": {
+                "viewports" : [{
+                    "maxwidth": 768,
+                    "sizes": [[300, 250], [320, 240]]
+                },
+                {
+                    "minwidth": 768,
+                    "sizes": [[728, 90]]
+                }]
+            },
+            "app-detaillead2": {
+                "viewports" : [{
+                    "maxwidth": 768,
+                    "sizes": [[300, 250], [320, 240]]
+                },
+                {
+                    "minwidth": 768,
+                    "sizes": [[728, 90]]
+                }]
+            },
+            "app-detailrect1": {
+                "viewports" : [{
+                    "minwidth": 0,
+                    "sizes": [[300, 250], [320, 240]]
                 }]
             }
-        },
-        "5": {
-             "lay2lead1": {
-                "viewports" : [{
-                    "maxwidth": 700,
-                    "sizes": [[320, 50]]
-                },
-                {
-                    "minwidth": 700,
-                    "sizes": [[728, 90]]
-                }]
-            },
-            "homelead1": {
-                "viewports" : [{
-                    "maxwidth": 700,
-                    "sizes": [[320, 50]]
-                },
-                {
-                    "minwidth": 700,
-                    "sizes": [[728, 90]]
-                }]
-            },
-            "lay3rect1": {
-                "viewports" : [{
-                    "maxwidth": 700,
-                    "sizes": [[320, 50]]
-                },
-                {
-                    "minwidth": 700,
-                    "sizes": [[300, 250]]
-                }]
-            },
-
-        }, 
-        "6": {
-            "lay2lead1": {
-                "viewports" : [{
-                    "maxwidth": 700,
-                    "sizes": [[320, 50]]
-                },
-                {
-                    "minwidth": 700,
-                    "sizes": [[728, 90]]
-                }]
-            },
-            "lay2lead2": {
-                "viewports" : [{
-                    "maxwidth": 700,
-                    "sizes": [[320, 50]]
-                },
-                {
-                    "minwidth": 700,
-                    "sizes": [[728, 90]]
-                }]
-            },
-            "lay3rect1": {
-                "viewports" : [{
-                    "maxwidth": 700,
-                    "sizes": [[320, 50]]
-                },
-                {
-                    "minwidth": 700,
-                    "sizes": [[300, 250]]
-                }]
-            },
-            "lay3rect3": {
-                "viewports" : [{
-                    "maxwidth": 700,
-                    "sizes": [[320, 50]]
-                },
-                {
-                    "minwidth": 700,
-                    "sizes": [[300, 250]]
-                }]
-            }
-        },
-        "7": {
-             "lay2lead1": {
-                "viewports" : [{
-                    "maxwidth": 700,
-                    "sizes": [[320, 50]]
-                },
-                {
-                    "minwidth": 700,
-                    "sizes": [[728, 90]]
-                }]
-            },
-            "lay2lead2": {
-                "viewports" : [{
-                    "maxwidth": 700,
-                    "sizes": [[320, 50]]
-                },
-                {
-                    "minwidth": 700,
-                    "sizes": [[728, 90]]
-                }]
-            },
-            "lay3rect1": { //!not called on website
-                "viewports" : [{
-                    "maxwidth": 700,
-                    "sizes": [[]]
-                },
-                {
-                    "minwidth": 700,
-                    "sizes": [[]]
-                }]
-            },
-        }, 
-        "8": {
-             "lay2lead1": {
-                "viewports" : [{
-                    "maxwidth": 700,
-                    "sizes": [[320, 50]]
-                },
-                {
-                    "minwidth": 700,
-                    "sizes": [[728, 90]]
-                }]
-            },
-            "lay2lead2": {
-                "viewports" : [{
-                    "maxwidth": 700,
-                    "sizes": [[320, 50]]
-                },
-                {
-                    "minwidth": 700,
-                    "sizes": [[728, 90]]
-                }]
-            },
-            "lay3rect1": { //  !!not called on website (legacy adslot instead)
-                "viewports" : [{
-                    "maxwidth": 700,
-                    "sizes": [[320, 50]]
-                },
-                {
-                    "minwidth": 700,
-                    "sizes": [[300, 250]]
-                }]
-            }
-        }            
+        }       
     }
 };
 
