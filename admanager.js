@@ -11,6 +11,7 @@ var gotAds = false;
 pickAdFlow();
 
 function pickAdFlow(){
+    overruleLazyloading()
     var cmp = hasCmp()
     setGoogleTag(cmp);
     if(cmp){
@@ -25,6 +26,17 @@ function pickAdFlow(){
         loadAds(cmp);
     }
 };
+
+function overruleLazyloading(){
+    url = new URL(window.location)
+    var lazyLoading = url.searchParams.get("lazyloading")
+    if (lazyLoading == "true"){
+        adSettings.lazyLoading = true
+    }
+    if (lazyLoading == "false"){
+        adSettings.lazyLoading = false
+    }
+}
 
 function initCmpAds(cmp){
     if (cmp=='faktor'){
@@ -48,7 +60,14 @@ function loadAds(cmp){
             var visibleAdslots = getAdslots();
             loadPrebid(visibleAdslots, section, cmp);
             defineAdslots(visibleAdslots, targeting);
-            renderAds(visibleAdslots, false);
+
+            if(adSettings.siteName == "omroepflevoland"){
+                //flevoland hijacks onLoad event. can't use it.
+                renderAds(visibleAdslots, true);
+            }
+            else{
+                renderAds(visibleAdslots, false);
+            }
         })
     })
 };
@@ -185,7 +204,9 @@ function loadPrebid(visibleAdslots, section, cmp){
 
     function initAdserver() {
         if(adSettings.prebid){
+            //prevent double refresh
             if (pbjs.initAdserverSet) return;
+            
             pbjs.initAdserverSet = true;
             googletag.cmd.push(function() {
                 pbjs.que.push(function() {
@@ -196,7 +217,9 @@ function loadPrebid(visibleAdslots, section, cmp){
         }
         else
         {
+            //prevent double refresh
             if (pbjs.initAdserverSet) return;
+            
             pbjs.initAdserverSet = true;
             googletag.cmd.push(function() {
                 googletag.pubads().refresh();
