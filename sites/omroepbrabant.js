@@ -148,6 +148,12 @@ adSettings = {
                     "sizes": [[300, 250]]
                 }]
             },
+            "defaultcontent1": {
+                "viewports": [{
+                    "minwidth": 767,
+                    "sizes": [728, 90]
+                }]
+            },
             "mobileheaderbanner": {
                 "viewports": [{
                     "minwidth": 992,
