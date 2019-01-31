@@ -419,7 +419,18 @@ adSettings = {
     adManager.async = true; 
     adManager.type = 'text/javascript'; 
     var useSSL = 'https:' == document.location.protocol;
-    adManager.src = (useSSL ? 'https:' : 'http:') + '//crs-media-cdn.nl/admanager.min.js';
+
+    var ieIe = /*@cc_on!@*/false || !!document.documentMode;
+    console.log("before if statement")
+    console.log(ieIe);
+
+    if (ieIe){
+        console.log("attempting to load admanager-faktor.js")
+        adManager.src = (useSSL ? 'https:' : 'http:') + '//crs-media-cdn.nl/admanager-faktor.js';
+    }
+    else{
+        adManager.src = (useSSL ? 'https:' : 'http:') + '//crs-media-cdn.nl/admanager.min.js';
+    }
     var node = document.getElementsByTagName('script')[0]; 
     node.parentNode.insertBefore(adManager, node);
 }()

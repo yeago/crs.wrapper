@@ -11,7 +11,6 @@ var gotAds = false;
 pickAdFlow();
 
 function pickAdFlow(){
-    overruleLazyloading()
     var cmp = hasCmp()
     setGoogleTag(cmp);
     if(cmp){
@@ -26,17 +25,6 @@ function pickAdFlow(){
         loadAds(cmp);
     }
 };
-
-function overruleLazyloading(){
-    url = new URL(window.location)
-    var lazyLoading = url.searchParams.get("lazyloading")
-    if (lazyLoading == "true"){
-        adSettings.lazyLoading = true
-    }
-    if (lazyLoading == "false"){
-        adSettings.lazyLoading = false
-    }
-}
 
 function initCmpAds(cmp){
     if (cmp=='faktor'){
