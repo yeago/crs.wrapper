@@ -164,6 +164,106 @@ adSettings = {
                 }]
             }                             
         },
+        "Home-site": {
+            "site-homelead1": {
+                "viewports" : [{
+                    "maxwidth": 768,
+                    "sizes": [[320, 50]]
+                },
+                {
+                    "minwidth": 768,
+                    "sizes": [[728, 90]]
+                }]
+            },
+            "site-homelead2": {
+                "viewports" : [{
+                    "maxwidth": 768,
+                    "sizes": [[320, 50]]
+                },
+                {
+                    "minwidth": 768,
+                    "sizes": [[728, 90]]
+                }]
+            },
+            "site-homelead3": {
+                "viewports" : [{
+                    "maxwidth": 768,
+                    "sizes": [[320, 50]]
+                },
+                {
+                    "minwidth": 768,
+                    "sizes": [[728, 90]]
+                }]
+            },
+            "site-homerect1": {
+                "viewports" : [{
+                    "minwidth": 0,
+                    "sizes": [[300, 250], [320, 240]]
+                }]
+            },
+            "site-homerect2": {
+                "viewports" : [{
+                    "minwidth": 0,
+                    "sizes": [[300, 250], [320, 240]]
+                }]
+            },
+            "site-homerect3": {
+                "viewports" : [{
+                    "minwidth": 0,
+                    "sizes": [[300, 250], [320, 240]]
+                }]
+            }                  
+        },
+        "Home-app": {
+            "app-homelead1": {
+                "viewports" : [{
+                    "maxwidth": 768,
+                    "sizes": [[320, 50]]
+                },
+                {
+                    "minwidth": 768,
+                    "sizes": [[728, 90]]
+                }]
+            },
+            "app-homelead2": {
+                "viewports" : [{
+                    "maxwidth": 768,
+                    "sizes": [[320, 50]]
+                },
+                {
+                    "minwidth": 768,
+                    "sizes": [[728, 90]]
+                }]
+            },
+            "app-homelead3": {
+                "viewports" : [{
+                    "maxwidth": 768,
+                    "sizes": [[320, 50]]
+                },
+                {
+                    "minwidth": 768,
+                    "sizes": [[728, 90]]
+                }]
+            },
+            "app-homerect1": {
+                "viewports" : [{
+                    "minwidth": 0,
+                    "sizes": [[300, 250], [320, 240]]
+                }]
+            },
+            "app-homerect2": {
+                "viewports" : [{
+                    "minwidth": 0,
+                    "sizes": [[300, 250], [320, 240]]
+                }]
+            },
+            "app-homerect3": {
+                "viewports" : [{
+                    "minwidth": 0,
+                    "sizes": [[300, 250], [320, 240]]
+                }]
+            }                             
+        },
         "Overview": {
             "desktop-overviewrect1": {
                 "viewports" : [{
@@ -177,6 +277,34 @@ adSettings = {
                     "sizes": [[300, 250], [320, 240]]
                 }]
             },
+            "app-overviewrect1": {
+                "viewports" : [{
+                    "minwidth": 0,
+                    "sizes": [[300, 250], [320, 240]]
+                }]
+            },
+            "app-overviewrect2": {
+                "viewports" : [{
+                    "minwidth": 0,
+                    "sizes": [[300, 250], [320, 240]]
+                }]
+            }
+        },
+        "Overview-site": {
+            "site-overviewrect1": {
+                "viewports" : [{
+                    "minwidth": 0,
+                    "sizes": [[300, 250], [320, 240]]
+                }]
+            },
+            "site-overviewrect2": {
+                "viewports" : [{
+                    "minwidth": 0,
+                    "sizes": [[300, 250], [320, 240]]
+                }]
+            }
+        },
+        "Overview-app": {
             "app-overviewrect1": {
                 "viewports" : [{
                     "minwidth": 0,
@@ -243,6 +371,62 @@ adSettings = {
                     "sizes": [[300, 250], [320, 240]]
                 }]
             },
+            "app-detaillead1": {
+                "viewports" : [{
+                    "maxwidth": 768,
+                    "sizes": [[300, 250], [320, 240]]
+                },
+                {
+                    "minwidth": 768,
+                    "sizes": [[728, 90]]
+                }]
+            },
+            "app-detaillead2": {
+                "viewports" : [{
+                    "maxwidth": 768,
+                    "sizes": [[300, 250], [320, 240]]
+                },
+                {
+                    "minwidth": 768,
+                    "sizes": [[728, 90]]
+                }]
+            },
+            "app-detailrect1": {
+                "viewports" : [{
+                    "minwidth": 0,
+                    "sizes": [[300, 250], [320, 240]]
+                }]
+            }
+        },
+        "Detail-site": {
+             "site-detaillead1": {
+                "viewports" : [{
+                    "maxwidth": 768,
+                    "sizes": [[300, 250], [320, 240]]
+                },
+                {
+                    "minwidth": 768,
+                    "sizes": [[728, 90]]
+                }]
+            },
+            "site-detaillead2": {
+                "viewports" : [{
+                    "maxwidth": 768,
+                    "sizes": [[300, 250], [320, 240]]
+                },
+                {
+                    "minwidth": 768,
+                    "sizes": [[728, 90]]
+                }]
+            },
+            "site-detailrect1": {
+                "viewports" : [{
+                    "minwidth": 0,
+                    "sizes": [[300, 250], [320, 240]]
+                }]
+            }
+        },
+        "Detail-app": {
             "app-detaillead1": {
                 "viewports" : [{
                     "maxwidth": 768,
