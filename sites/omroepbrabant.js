@@ -424,13 +424,13 @@ adSettings = {
     console.log("before if statement")
     console.log(ieIe);
 
-    if (ieIe){
-        console.log("attempting to load admanager-faktor.js")
-        adManager.src = (useSSL ? 'https:' : 'http:') + '//crs-media-cdn.nl/admanager-faktor.js';
-    }
-    else{
-        adManager.src = (useSSL ? 'https:' : 'http:') + '//crs-media-cdn.nl/admanager.min.js';
-    }
+    adManager.src = (useSSL ? 'https:' : 'http:') + '//crs-media-cdn.nl/admanager.min.js';
+    //if (ieIe){
+    //    console.log("attempting to load admanager-faktor.js")
+    //    adManager.src = (useSSL ? 'https:' : 'http:') + '//crs-media-cdn.nl/admanager-faktor.js';
+    //}
+    //else{
+    //}
     var node = document.getElementsByTagName('script')[0]; 
     node.parentNode.insertBefore(adManager, node);
 }()
