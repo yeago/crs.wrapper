@@ -167,7 +167,7 @@ adSettings = {
         "Home-site": {
             "site-homelead1": {
                 "viewports" : [{
-		            "minwidth": 0,
+                    "minwidth": 0,
                     "maxwidth": 792,
                     "sizes": [[320, 50]]
                 }, {
@@ -225,7 +225,7 @@ adSettings = {
         "Home-app": {
             "app-homelead1": {
                 "viewports" : [{
-		            "minwidth": 0,
+                    "minwidth": 0,
                     "maxwidth": 792,
                     "sizes": [[320, 50]]
                 }, {
