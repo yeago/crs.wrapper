@@ -91,6 +91,12 @@ adSettings = {
             }
         },
         "Container": {
+            "containerbelowspotlight": {
+                "viewports": [{
+                    "maxwidth": 767,
+                    "sizes": [[320, 50]]
+                }]
+            },
             "defaultcontent1": {
                 "viewports": [{
                     "minwidth": 767,
@@ -103,10 +109,24 @@ adSettings = {
                     "sizes": [728, 90]
                 }]
             },
+            "containerbottom": {
+                "viewports": [{
+                    "minwidth": 768,
+                    "maxwidth": 992,
+                    "sizes": [[300, 250]]
+                }]
+            },
             "headerbanner": {
                 "viewports": [{
                     "minwidth": 1200,
                     "sizes": [728, 90]
+                }]
+            },
+            "mobileheaderbanner": {
+                "viewports": [{
+                    "minwidth": 992,
+                    "maxwidth": 1200,
+                    "sizes": [[320, 50]]
                 }]
             },
             "defaultsidebar1": {
@@ -120,13 +140,6 @@ adSettings = {
                     "minwidth": 992,
                     "sizes": [[300, 250]]
                 }]
-            },
-            "mobileheaderbanner": {
-                "viewports": [{
-                    "minwidth": 992,
-                    "maxwidth": 1200,
-                    "sizes": [[320, 50]]
-                }]
             }
         },
         "NewsItem": {
@@ -134,6 +147,13 @@ adSettings = {
                 "viewports": [{
                     "minwidth": 1200,
                     "sizes": [728, 90]
+                }]
+            },
+            "mobileheaderbanner": {
+                "viewports": [{
+                    "minwidth": 992,
+                    "maxwidth": 1200,
+                    "sizes": [[320, 50]]
                 }]
             },
             "defaultsidebar1": {
@@ -152,13 +172,6 @@ adSettings = {
                 "viewports": [{
                     "minwidth": 767,
                     "sizes": [728, 90]
-                }]
-            },
-            "mobileheaderbanner": {
-                "viewports": [{
-                    "minwidth": 992,
-                    "maxwidth": 1200,
-                    "sizes": [[320, 50]]
                 }]
             }
         },
@@ -181,6 +194,13 @@ adSettings = {
                     "sizes": [728, 90]
                 }]
             },
+            "mobileheaderbanner": {
+                "viewports": [{
+                    "minwidth": 992,
+                    "maxwidth": 1200,
+                    "sizes": [[320, 50]]
+                }]
+            },
             "defaultsidebar1": {
                 "viewports": [{
                     "minwidth": 992,
@@ -191,13 +211,6 @@ adSettings = {
                 "viewports": [{
                     "minwidth": 992,
                     "sizes": [[300, 250]]
-                }]
-            },
-            "mobileheaderbanner": {
-                "viewports": [{
-                    "minwidth": 992,
-                    "maxwidth": 1200,
-                    "sizes": [[320, 50]]
                 }]
             }
         },
@@ -214,6 +227,13 @@ adSettings = {
                     "sizes": [728, 90]
                 }]
             },
+            "mobileheaderbanner": {
+                "viewports": [{
+                    "minwidth": 992,
+                    "maxwidth": 1200,
+                    "sizes": [[320, 50]]
+                }]
+            },
             "defaultsidebar1": {
                 "viewports": [{
                     "minwidth": 992,
@@ -224,13 +244,6 @@ adSettings = {
                 "viewports": [{
                     "minwidth": 992,
                     "sizes": [[300, 250]]
-                }]
-            },
-            "mobileheaderbanner": {
-                "viewports": [{
-                    "minwidth": 992,
-                    "maxwidth": 1200,
-                    "sizes": [[320, 50]]
                 }]
             }
         },
@@ -253,6 +266,13 @@ adSettings = {
                     "sizes": [728, 90]
                 }]
             },
+            "mobileheaderbanner": {
+                "viewports": [{
+                    "minwidth": 992,
+                    "maxwidth": 1200,
+                    "sizes": [[320, 50]]
+                }]
+            },
             "defaultsidebar1": {
                 "viewports": [{
                     "minwidth": 992,
@@ -263,13 +283,6 @@ adSettings = {
                 "viewports": [{
                     "minwidth": 992,
                     "sizes": [[300, 250]]
-                }]
-            },
-            "mobileheaderbanner": {
-                "viewports": [{
-                    "minwidth": 992,
-                    "maxwidth": 1200,
-                    "sizes": [[320, 50]]
                 }]
             }
         },
@@ -286,6 +299,13 @@ adSettings = {
                     "sizes": [728, 90]
                 }]
             },
+            "mobileheaderbanner": {
+                "viewports": [{
+                    "minwidth": 992,
+                    "maxwidth": 1200,
+                    "sizes": [[320, 50]]
+                }]
+            },
             "defaultsidebar1": {
                 "viewports": [{
                     "minwidth": 992,
@@ -296,13 +316,6 @@ adSettings = {
                 "viewports": [{
                     "minwidth": 992,
                     "sizes": [[300, 250]]
-                }]
-            },
-            "mobileheaderbanner": {
-                "viewports": [{
-                    "minwidth": 992,
-                    "maxwidth": 1200,
-                    "sizes": [[320, 50]]
                 }]
             }
         },
@@ -319,6 +332,13 @@ adSettings = {
                     "sizes": [728, 90]
                 }]
             },
+            "mobileheaderbanner": {
+                "viewports": [{
+                    "minwidth": 992,
+                    "maxwidth": 1200,
+                    "sizes": [[320, 50]]
+                }]
+            },
             "defaultsidebar1": {
                 "viewports": [{
                     "minwidth": 992,
@@ -330,14 +350,7 @@ adSettings = {
                     "minwidth": 992,
                     "sizes": [[300, 250]]
                 }
-            ]},
-            "mobileheaderbanner": {
-                "viewports": [{
-                    "minwidth": 992,
-                    "maxwidth": 1200,
-                    "sizes": [[320, 50]]
-                }]
-            }
+            ]}
         },
         "TaggedTheme": {
             "defaultcontent1": {
@@ -352,6 +365,13 @@ adSettings = {
                     "sizes": [728, 90]
                 }]
             },
+            "mobileheaderbanner": {
+                "viewports": [{
+                    "minwidth": 992,
+                    "maxwidth": 1200,
+                    "sizes": [[320, 50]]
+                }]
+            },
             "defaultsidebar1": {
                 "viewports": [{
                     "minwidth": 992,
@@ -362,13 +382,6 @@ adSettings = {
                 "viewports": [{
                     "minwidth": 992,
                     "sizes": [[300, 250]]
-                }]
-            },
-            "mobileheaderbanner": {
-                "viewports": [{
-                    "minwidth": 992,
-                    "maxwidth": 1200,
-                    "sizes": [[320, 50]]
                 }]
             }
         },
@@ -391,6 +404,13 @@ adSettings = {
                     "sizes": [728, 90]
                 }]
             },
+            "mobileheaderbanner": {
+                "viewports": [{
+                    "minwidth": 992,
+                    "maxwidth": 1200,
+                    "sizes": [[320, 50]]
+                }]
+            },
             "defaultsidebar1": {
                 "viewports": [{
                     "minwidth": 992,
@@ -401,13 +421,6 @@ adSettings = {
                 "viewports": [{
                     "minwidth": 992,
                     "sizes": [[300, 250]]
-                }]
-            },
-            "mobileheaderbanner": {
-                "viewports": [{
-                    "minwidth": 992,
-                    "maxwidth": 1200,
-                    "sizes": [[320, 50]]
                 }]
             }
         }
