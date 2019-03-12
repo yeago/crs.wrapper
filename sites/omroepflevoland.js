@@ -167,11 +167,19 @@ adSettings = {
         "Home-site": {
             "site-homelead1": {
                 "viewports" : [{
-                    "maxwidth": 768,
+		            "minwidth": 0,
+                    "maxwidth": 792,
                     "sizes": [[320, 50]]
-                },
-                {
-                    "minwidth": 768,
+                }, {
+                    "minwidth": 792,
+                    "maxwidth": 900,
+                    "sizes": [[728, 90]]
+                }, {
+                    "minwidth": 900,
+                    "maxwidth": 1190,
+                    "sizes": [[320, 50]]
+                }, {
+                    "minwidth": 1190,
                     "sizes": [[728, 90]]
                 }]
             },
@@ -217,11 +225,19 @@ adSettings = {
         "Home-app": {
             "app-homelead1": {
                 "viewports" : [{
-                    "maxwidth": 768,
+		            "minwidth": 0,
+                    "maxwidth": 792,
                     "sizes": [[320, 50]]
-                },
-                {
-                    "minwidth": 768,
+                }, {
+                    "minwidth": 792,
+                    "maxwidth": 900,
+                    "sizes": [[728, 90]]
+                }, {
+                    "minwidth": 900,
+                    "maxwidth": 1190,
+                    "sizes": [[320, 50]]
+                }, {
+                    "minwidth": 1190,
                     "sizes": [[728, 90]]
                 }]
             },
